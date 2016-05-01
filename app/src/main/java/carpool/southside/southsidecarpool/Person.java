@@ -1,6 +1,15 @@
 package carpool.southside.southsidecarpool;
 
 public class Person{
+    public static final String TABLE_NAME = "People";
+    public static final String COL_ID = "personID";
+    public static final String COL_NAME = "personName";
+    public static final String COL_NUMBER = "personNumber";
+    public static final String COL_COLLEGE = "personCollege";
+    /*
+    public static final String COL_BATCH = "personBatch";
+    public static final String COL_VILLAGE = "personVillage";
+    */
     private int personID;
     private String personName;
     private String personNumber;
@@ -20,7 +29,6 @@ public class Person{
         this.personNumber = personNumber;
         this.personCollege = personCollege;
     }
-    //If Batch and Village are Implemented
     /*
     public Person(String personName, String personNumber, String personCollege, String personBatch, String personVillage){
         this.personName = personName;
