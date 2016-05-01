@@ -25,7 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.aurelhubert:ahbottomnavigation:1.1.8'
     compile 'info.hoang8f:android-segmented:1.0.6'
-    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.1@aar'){
-        transitive=true
-    }
+    compile 'com.github.ivbaranov:materiallettericon:0.2.2'
 }
