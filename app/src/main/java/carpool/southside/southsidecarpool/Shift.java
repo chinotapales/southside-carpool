@@ -9,7 +9,7 @@ public class Shift{
     public static final String COL_PROVIDER = "shiftProvider";
     private int shiftID;
     private String shiftDay;
-    private String shiftType; //SchoolBound or Homebound
+    private String shiftType;
     private String shiftTime;
     private String shiftProvider;
     public Shift(String shiftDay, String shiftType, String shiftTime, String shiftProvider){

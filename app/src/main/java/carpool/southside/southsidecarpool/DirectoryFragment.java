@@ -34,9 +34,9 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         rvPeople = (RecyclerView) v.findViewById(R.id.directory_recycler_view);
         //Testing Purposes
         ArrayList<Person> people = new ArrayList<>();
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU"));
-        people.add(new Person("Erika Mison", "09175524466", "CSB"));
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB"));
+        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0));
+        people.add(new Person("Erika Mison", "09175524466", "CSB", 0));
+        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0));
         personAdapter = new PersonAdapter(people);
         rvPeople.setAdapter(personAdapter);
         rvPeople.setLayoutManager(new LinearLayoutManager(v.getContext()));
@@ -120,9 +120,9 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         super.onResume();
         //Testing Purposes
         ArrayList<Person> people = new ArrayList<>();
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU"));
-        people.add(new Person("Erika Mison", "09175524466", "CSB"));
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB"));
+        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0));
+        people.add(new Person("Erika Mison", "09175524466", "CSB", 0));
+        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0));
         personAdapter = new PersonAdapter(people);
         rvPeople.setAdapter(personAdapter);
         rvPeople.setLayoutManager(new LinearLayoutManager(getContext()));

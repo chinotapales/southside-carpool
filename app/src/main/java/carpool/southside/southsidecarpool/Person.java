@@ -6,46 +6,25 @@ public class Person{
     public static final String COL_NAME = "personName";
     public static final String COL_NUMBER = "personNumber";
     public static final String COL_COLLEGE = "personCollege";
-    /*
-    public static final String COL_BATCH = "personBatch";
-    public static final String COL_VILLAGE = "personVillage";
-    */
-    private int personID;
+    public static final String COL_FAVORITED = "isFavorited";
+    private int personID, isFavorited;
     private String personName;
     private String personNumber;
     private String personCollege;
-    /*
-    private String personBatch;
-    private String personVillage;
-     */
-    public Person(String personName, String personNumber, String personCollege){
+    public Person(String personName, String personNumber, String personCollege, int isFavorited){
         this.personName = personName;
         this.personNumber = personNumber;
         this.personCollege = personCollege;
+        this.isFavorited = isFavorited;
     }
-    public Person(int personID, String personName, String personNumber, String personCollege){
+    public Person(int personID, String personName, String personNumber, String personCollege, int isFavorited){
         this.personID = personID;
         this.personName = personName;
         this.personNumber = personNumber;
         this.personCollege = personCollege;
+        this.isFavorited = isFavorited;
+
     }
-    /*
-    public Person(String personName, String personNumber, String personCollege, String personBatch, String personVillage){
-        this.personName = personName;
-        this.personNumber = personNumber;
-        this.personCollege = personCollege;
-        this.personBatch = personBatch;
-        this.personVillage = personVillage;
-    }
-    public Person(int personID, String personName, String personNumber, String personCollege, String personBatch, String personVillage){
-        this.personID = personID;
-        this.personName = personName;
-        this.personNumber = personNumber;
-        this.personCollege = personCollege;
-        this.personBatch = personBatch;
-        this.personVillage = personVillage;
-    }
-    */
     public int getPersonID(){
         return personID;
     }
@@ -70,18 +49,10 @@ public class Person{
     public void setPersonCollege(String personCollege){
         this.personCollege = personCollege;
     }
-    /*
-    public String getPersonBatch(){
-        return personBatch;
+    public int getIsFavorited(){
+        return isFavorited;
     }
-    public void setPersonBatch(String personBatch){
-        this.personBatch = personBatch;
+    public void setIsFavorited(int isFavorited){
+        this.isFavorited = isFavorited;
     }
-    public String getPersonVillage(){
-        return personVillage;
-    }
-    public void setPersonVillage(String personVillage){
-        this.personVillage = personVillage;
-    }
-    */
 }

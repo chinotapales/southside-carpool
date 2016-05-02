@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity{
                     if(previousPosition == 1|| previousPosition == 2){
                         schedule.setType("BackHome");
                     }
-                    else {
+                    else{
                         Bundle bundle = new Bundle();
                         bundle.putString("trip_id", "BackHome");
                         schedule.setArguments(bundle);
@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity{
             case 24466:{
                 for(int i = 0; i < permissions.length; i++){
                     if(grantResults[i] == PackageManager.PERMISSION_GRANTED){
-                        //DO NOTHING
                     }
                     else if(grantResults[i] == PackageManager.PERMISSION_DENIED){
                         if(permissions[i].equals(Manifest.permission.SEND_SMS)){
