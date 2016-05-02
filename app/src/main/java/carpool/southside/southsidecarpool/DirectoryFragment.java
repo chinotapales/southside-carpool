@@ -1,11 +1,13 @@
 package carpool.southside.southsidecarpool;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,8 +32,8 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         segmentedSchool = (SegmentedGroup) v.findViewById(R.id.segmented_directory);
         segmentedSchool.setOnCheckedChangeListener(this);
         rvPeople = (RecyclerView) v.findViewById(R.id.directory_recycler_view);
-        ArrayList<Person> people = new ArrayList<>();
         //Testing Purposes
+        ArrayList<Person> people = new ArrayList<>();
         people.add(new Person("Chino Tapales", "09175524466", "DLSU"));
         people.add(new Person("Erika Mison", "09175524466", "CSB"));
         people.add(new Person("Briana Buencamino", "09175524466", "CSB"));
@@ -69,7 +71,12 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
                     Toast.makeText(getActivity(), "Swiped Left", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(getActivity(), "Swiped Right", Toast.LENGTH_SHORT).show();
+                    //TODO Add Permissions for Marshmallow
+                    String number = personAdapter.getIntentNumber(position);
+                    Intent i = new Intent();
+                    i.setAction(Intent.ACTION_CALL);
+                    i.setData(Uri.parse(number));
+                    startActivity(i);
                 }
             }
             @Override
