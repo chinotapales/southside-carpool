@@ -8,6 +8,8 @@
 bin/
 tmp/
 *.tmp
+*.lock
+*.bin
 *.bak
 *.swp
 *~.nib
