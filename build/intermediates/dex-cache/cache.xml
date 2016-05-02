@@ -2,6 +2,7 @@
 <items version="2" >
 
     <item
+<<<<<<< HEAD
         jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\info.hoang8f\android-segmented\1.0.6\jars\classes.jar"
         jumboMode="true"
         revision="23.0.3"
@@ -91,6 +92,97 @@
         revision="23.0.3"
         sha1="59db32d9126fba9f61ed68d8eebe3edfd89194a3">
         <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.ivbaranov-materiallettericon-0.2.2_186ed9882a8d310f5eb905c8428fc0b1926e1117\classes.dex" />
+=======
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="cd8de4f51b71872ddac88e251319ae1d2b18e163">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_7046f75e17d8e649011098367608e8b3171b9b18/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="87ca593662c63092ef5beaea0b28413025c52ea9">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_c0706d75c9b4625f7e52df8e4296fc11273236a0/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_f580c2fe10b94946b2acd8131e9ea151dccde2f6/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_a1e12d9c0a6dd543a2e7dbcdb402030edd4221e4/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.3.0_10ef458c6f2a7fd9603edf61d522f9b53c67e197/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/com.github.ivbaranov/materiallettericon/0.2.2/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="59db32d9126fba9f61ed68d8eebe3edfd89194a3">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.github.ivbaranov-materiallettericon-0.2.2_8a68e61193c52659cb8fd60afbb7f0eb7b3f1290/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.2.1_c676b1c29ccae4d0554407bc763c264ef5f10241/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.3.0_9c67db469086e6330ae8d24f80b1b4bc3753487f/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.3.0_06f313edc52ebb953b7e391e700ea1566fad7203/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_6a3b2b786d3206cc0b4cfb92ddd9aa63fc47a7cd/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/com.aurelhubert/ahbottomnavigation/1.1.8/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="f29021effc25996fe2b0539f020241f059230451">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.aurelhubert-ahbottomnavigation-1.1.8_8b8ff34b6ae40c0ce904a9653c85c1d04adb58b9/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.2.1_4dc13f983c168a681cfed62294cfe316dd7eb60e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/exploded-aar/info.hoang8f/android-segmented/1.0.6/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="692a913dff3246e0cc5369c2508f5970ecfeca01">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/info.hoang8f-android-segmented-1.0.6_bd42ec0b50ad40a3986f3c03269efc02918a5be8/classes.dex" />
+>>>>>>> origin/master
     </item>
 
 </items>

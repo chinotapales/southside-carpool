@@ -48,6 +48,9 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         super.onAttachedToRecyclerView(recyclerView);
     }
     public String getIntentNumber(int position){
-        return "tel:" + people.get(position).getPersonNumber();
+        return people.get(position).getPersonNumber();
+    }
+    public String getPersonName(int position){
+        return people.get(position).getPersonName();
     }
 }

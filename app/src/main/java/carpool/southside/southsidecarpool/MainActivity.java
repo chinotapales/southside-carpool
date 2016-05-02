@@ -1,12 +1,17 @@
 package carpool.southside.southsidecarpool;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
     private int previousPosition = 0;
@@ -77,5 +82,56 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+        requestPermissions();
+    }
+    private void requestPermissions(){
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            int hasCallPermission = checkSelfPermission(Manifest.permission.CALL_PHONE);
+            int hasSMSPermission = checkSelfPermission(Manifest.permission.SEND_SMS);
+            List<String> permissions = new ArrayList<>();
+            if(hasCallPermission != PackageManager.PERMISSION_GRANTED){
+                permissions.add(Manifest.permission.CALL_PHONE);
+            }
+            if(hasSMSPermission != PackageManager.PERMISSION_GRANTED){
+                permissions.add(Manifest.permission.SEND_SMS);
+            }
+            if(!permissions.isEmpty()){
+                requestPermissions(permissions.toArray(new String[permissions.size()]), 24466);
+            }
+        }
+        else return;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+        String message = "";
+        List<String> deniedPermissions = new ArrayList<>();
+        switch(requestCode){
+            case 24466:{
+                for(int i = 0; i < permissions.length; i++){
+                    if(grantResults[i] == PackageManager.PERMISSION_GRANTED){
+                        //DO NOTHING
+                    }
+                    else if(grantResults[i] == PackageManager.PERMISSION_DENIED){
+                        if(permissions[i].equals(Manifest.permission.SEND_SMS)){
+                            deniedPermissions.add("SMS");
+                        }
+                        else if(permissions[i].equals(Manifest.permission.CALL_PHONE)){
+                            deniedPermissions.add("Phone");
+                        }
+                    }
+                }
+                for(int i = 0; i < deniedPermissions.size(); i++){
+                    message += deniedPermissions.get(i) + ", ";
+                }
+                if(message.length() > 0){
+                    message = message.substring(0, message.length() - 2) + " Denied - Features May Not Work";
+                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                }
+            }
+            break;
+            default:{
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
     }
 }

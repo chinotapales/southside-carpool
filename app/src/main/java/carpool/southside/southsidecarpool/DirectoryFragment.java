@@ -46,14 +46,17 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId){
         switch (checkedId){
+            case R.id.all_button:
+                Toast.makeText(getActivity(), "All", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.dlsu_button:
                 Toast.makeText(getActivity(), "DLSU Students", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.csb_button:
                 Toast.makeText(getActivity(), "CSB Students", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.both_button:
-                Toast.makeText(getActivity(), "Both", Toast.LENGTH_SHORT).show();
+            case R.id.favorites_button:
+                Toast.makeText(getActivity(), "Favorites", Toast.LENGTH_SHORT).show();
                 break;
             default:
         }
@@ -68,11 +71,14 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
                 if(direction == ItemTouchHelper.LEFT){
-                    Toast.makeText(getActivity(), "Swiped Left", Toast.LENGTH_SHORT).show();
+                    String number = "smsto:" + personAdapter.getIntentNumber(position);
+                    String name[] = personAdapter.getPersonName(position).split(" ");
+                    Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse(number));
+                    i.putExtra("sms_body", "Hey " + name[0] + ", ");
+                    startActivity(i);
                 }
                 else{
-                    //TODO Add Permissions for Marshmallow
-                    String number = personAdapter.getIntentNumber(position);
+                    String number = "tel:" + personAdapter.getIntentNumber(position);
                     Intent i = new Intent();
                     i.setAction(Intent.ACTION_CALL);
                     i.setData(Uri.parse(number));
@@ -108,5 +114,18 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(rvPeople);
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Testing Purposes
+        ArrayList<Person> people = new ArrayList<>();
+        people.add(new Person("Chino Tapales", "09175524466", "DLSU"));
+        people.add(new Person("Erika Mison", "09175524466", "CSB"));
+        people.add(new Person("Briana Buencamino", "09175524466", "CSB"));
+        personAdapter = new PersonAdapter(people);
+        rvPeople.setAdapter(personAdapter);
+        rvPeople.setLayoutManager(new LinearLayoutManager(getContext()));
+        initSwipe();
     }
 }
