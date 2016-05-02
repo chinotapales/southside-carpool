@@ -1,2 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\info.hoang8f\android-segmented\1.0.6\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="692a913dff3246e0cc5369c2508f5970ecfeca01">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\info.hoang8f-android-segmented-1.0.6_78e178fab90877e39466cddf8974e0fd6e1f12e0\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.3.0_a7f912fb920e4fce72d712728821bbe4fb90f357\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.3.0_eda98ebc25cf358da221e99f093bee5f25c9b1cb\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="cfac910e8cfa797e7b906e1ace060d91df605160">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_e05338045f6f46f5e2174319c215bb2118802727\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.2.1_4f4a438a1577b5e6cfc5c67138fc9e21cfc84f47\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="3ab9be2de378fe3cbf5ae39dc1a2d6031c2134f3">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_409e6d8c7e329f94e7cbb311299bb3139ff3d3cb\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.3.0_15f84524ca502482585db07b7833d17d932056d4\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.aurelhubert\ahbottomnavigation\1.1.8\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="f29021effc25996fe2b0539f020241f059230451">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.aurelhubert-ahbottomnavigation-1.1.8_47cd809749ed0c000cfc2bfee05d12e7510d91a7\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.3.0_d5541e1df2fc19eb8b41d1a96023e6a456319286\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.2.1_b21fdc9c1b49bd610c83e711410c1c123e23fc6d\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.3.0_814d82a7df6e3ce37e5a9aa3f8cde27e798c6dba\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\libs\internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.3.0_7a31e6393540604271119d0ef0e907e791619649\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.github.ivbaranov\materiallettericon\0.2.2\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="59db32d9126fba9f61ed68d8eebe3edfd89194a3">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.ivbaranov-materiallettericon-0.2.2_186ed9882a8d310f5eb905c8428fc0b1926e1117\classes.dex" />
+    </item>
+
+</items>
