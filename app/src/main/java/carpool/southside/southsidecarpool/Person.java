@@ -23,7 +23,6 @@ public class Person{
         this.personNumber = personNumber;
         this.personCollege = personCollege;
         this.isFavorited = isFavorited;
-
     }
     public int getPersonID(){
         return personID;

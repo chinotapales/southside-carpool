@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
+    private final int REQUEST_PERMISSION_CODE = 5678;
     private int previousPosition = 0;
     private Toolbar toolbar;
     private AHBottomNavigation bottomNavigation;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity{
                 permissions.add(Manifest.permission.SEND_SMS);
             }
             if(!permissions.isEmpty()){
-                requestPermissions(permissions.toArray(new String[permissions.size()]), 24466);
+                requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_PERMISSION_CODE);
             }
         }
         else return;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity{
         String message = "";
         List<String> deniedPermissions = new ArrayList<>();
         switch(requestCode){
-            case 24466:{
+            case REQUEST_PERMISSION_CODE:{
                 for(int i = 0; i < permissions.length; i++){
                     if(grantResults[i] == PackageManager.PERMISSION_GRANTED){
                     }

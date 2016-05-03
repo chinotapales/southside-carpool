@@ -45,6 +45,7 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
     }
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId){
+        //Testing Purposes
         switch (checkedId){
             case R.id.all_button:
                 Toast.makeText(getActivity(), "All", Toast.LENGTH_SHORT).show();

@@ -27,6 +27,7 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
     }
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId){
+        //Testing purposes
         switch(checkedId){
             case R.id.monday_button:
                 Toast.makeText(getActivity(), "Monday Selected", Toast.LENGTH_SHORT).show();

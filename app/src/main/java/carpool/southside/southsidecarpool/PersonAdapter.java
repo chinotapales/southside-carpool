@@ -41,7 +41,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         PersonViewHolder viewHolder = new PersonViewHolder(view);
         return viewHolder;
     }
-    public void onBindViewHolder(final PersonViewHolder holder, final int position){
+    public void onBindViewHolder(final PersonViewHolder holder, int position){
         final int i = position;
         holder.personName.setText(people.get(position).getPersonName());
         holder.personNumber.setText(people.get(position).getPersonNumber());
@@ -55,7 +55,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         holder.personContainer.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                openBottomSheet(v, position);
+                openBottomSheet(v, i);
             }
         });
     }
@@ -75,12 +75,12 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         final int i = position;
         final Context context = v.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate (R.layout.bottom_sheet, null);
+        View view = inflater.inflate(R.layout.bottom_sheet, null);
         MaterialLetterIcon bottomImage = (MaterialLetterIcon) view.findViewById(R.id.image_bottom);
         bottomImage.setShapeColor(Color.parseColor("#4CAF50"));
         bottomImage.setShapeType(MaterialLetterIcon.Shape.CIRCLE);
         bottomImage.setLetterColor(Color.parseColor("#FFFFFF"));
-        bottomImage.setLetterSize(20);
+        bottomImage.setLetterSize(18);
         bottomImage.setInitials(true);
         bottomImage.setInitialsNumber(2);
         bottomImage.setLetter(getPersonName(position));
@@ -103,6 +103,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         starButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                //Testing purposes
                 Toast.makeText(v.getContext(), "Star", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
             }
@@ -110,6 +111,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         copyButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                //TODO Snackbar over Bottom Navigation
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.setText(getIntentNumber(i));
                 Toast.makeText(v.getContext(), "Number Successfully Copied", Toast.LENGTH_SHORT).show();
