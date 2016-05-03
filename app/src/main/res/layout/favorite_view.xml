@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center">
         <info.hoang8f.android.segmented.SegmentedGroup
-            android:id="@+id/segmented_directory"
+            android:id="@+id/segmented_favorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -22,30 +22,23 @@
             segmentedgroup:sc_corner_radius="10dp"
             segmentedgroup:sc_tint_color="@color/colorAccent">
             <RadioButton
-                android:id="@+id/all_button"
+                android:id="@+id/my_providers_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="All"
+                android:text="My Providers"
                 style="@style/RadioButton"/>
             <RadioButton
-                android:id="@+id/dlsu_button"
+                android:id="@+id/my_riders_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="DLSU"
-                style="@style/RadioButton"/>
-            <RadioButton
-                android:id="@+id/csb_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="CSB"
+                android:text="My Riders"
                 style="@style/RadioButton"/>
         </info.hoang8f.android.segmented.SegmentedGroup>
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/directory_recycler_view"
+        android:id="@+id/favorite_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"/>

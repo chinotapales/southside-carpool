@@ -86,7 +86,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         bottomImage.setLetter(getPersonName(position));
         TextView bottomName = (TextView) view.findViewById(R.id.name_bottom);
         bottomName.setText(getPersonName(position));
-        RelativeLayout starButton = (RelativeLayout) view.findViewById(R.id.star_bottom);
+        RelativeLayout heartButton = (RelativeLayout) view.findViewById(R.id.heart_bottom);
+        RelativeLayout heartRidersButton = (RelativeLayout) view.findViewById(R.id.heart_riders_bottom);
         RelativeLayout copyButton = (RelativeLayout) view.findViewById(R.id.copy_bottom);
         RelativeLayout callButton = (RelativeLayout) view.findViewById(R.id.call_bottom);
         TextView callText = (TextView) view.findViewById(R.id.call_bottom_text);
@@ -100,11 +101,15 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
         mBottomSheetDialog.show();
-        starButton.setOnClickListener(new View.OnClickListener(){
+        heartButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //Testing purposes
-                Toast.makeText(v.getContext(), "Star", Toast.LENGTH_SHORT).show();
+                mBottomSheetDialog.dismiss();
+            }
+        });
+        heartRidersButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
             }
         });

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
@@ -27,25 +26,18 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
     }
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId){
-        //Testing purposes
         switch(checkedId){
             case R.id.monday_button:
-                Toast.makeText(getActivity(), "Monday Selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tuesday_button:
-                Toast.makeText(getActivity(), "Tuesday Selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.wednesday_button:
-                Toast.makeText(getActivity(), "Wednesday Selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.thursday_button:
-                Toast.makeText(getActivity(), "Thursday Selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.friday_button:
-                Toast.makeText(getActivity(), "Friday Selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.saturday_button:
-                Toast.makeText(getActivity(), "Saturday Selected", Toast.LENGTH_SHORT).show();
                 break;
             default:
         }

@@ -18,39 +18,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 import java.util.ArrayList;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
-public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
-    private RecyclerView rvPeople;
+public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
+    private RecyclerView rvFavorites;
     private PersonAdapter personAdapter;
-    private SegmentedGroup segmentedSchool;
+    private SegmentedGroup segmentedFavorites;
     private Paint p = new Paint();
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.directory_view, container, false);
-        segmentedSchool = (SegmentedGroup) v.findViewById(R.id.segmented_directory);
-        segmentedSchool.setOnCheckedChangeListener(this);
-        rvPeople = (RecyclerView) v.findViewById(R.id.directory_recycler_view);
+        View v = inflater.inflate(R.layout.favorite_view, container, false);
+        segmentedFavorites = (SegmentedGroup) v.findViewById(R.id.segmented_favorites);
+        segmentedFavorites.setOnCheckedChangeListener(this);
+        rvFavorites = (RecyclerView) v.findViewById(R.id.favorite_recycler_view);
         //Testing Purposes
         ArrayList<Person> people = new ArrayList<>();
         people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
         people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
         people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
         personAdapter = new PersonAdapter(people);
-        rvPeople.setAdapter(personAdapter);
-        rvPeople.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        rvFavorites.setAdapter(personAdapter);
+        rvFavorites.setLayoutManager(new LinearLayoutManager(v.getContext()));
         initSwipe();
         return v;
     }
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId){
         switch (checkedId){
-            case R.id.all_button:
+            case R.id.my_providers_button:
                 break;
-            case R.id.dlsu_button:
-                break;
-            case R.id.csb_button:
+            case R.id.my_riders_button:
                 break;
             default:
         }
@@ -107,7 +104,7 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
             }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(rvPeople);
+        itemTouchHelper.attachToRecyclerView(rvFavorites);
     }
     @Override
     public void onResume(){
@@ -118,8 +115,8 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
         people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
         personAdapter = new PersonAdapter(people);
-        rvPeople.setAdapter(personAdapter);
-        rvPeople.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvFavorites.setAdapter(personAdapter);
+        rvFavorites.setLayoutManager(new LinearLayoutManager(getContext()));
         initSwipe();
     }
 }

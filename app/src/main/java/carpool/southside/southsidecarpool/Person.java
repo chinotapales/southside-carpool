@@ -6,23 +6,26 @@ public class Person{
     public static final String COL_NAME = "personName";
     public static final String COL_NUMBER = "personNumber";
     public static final String COL_COLLEGE = "personCollege";
-    public static final String COL_FAVORITED = "isFavorited";
-    private int personID, isFavorited;
+    public static final String COL_PROVIDER_FAVORITED = "isFavorited";
+    public static final String COL_RIDER_FAVORITED = "isRiderFavorited";
+    private int personID, isFavorited, isRiderFavorited;
     private String personName;
     private String personNumber;
     private String personCollege;
-    public Person(String personName, String personNumber, String personCollege, int isFavorited){
+    public Person(String personName, String personNumber, String personCollege, int isFavorited, int isRiderFavorited){
         this.personName = personName;
         this.personNumber = personNumber;
         this.personCollege = personCollege;
         this.isFavorited = isFavorited;
+        this.isRiderFavorited = isRiderFavorited;
     }
-    public Person(int personID, String personName, String personNumber, String personCollege, int isFavorited){
+    public Person(int personID, String personName, String personNumber, String personCollege, int isFavorited, int isRiderFavorited){
         this.personID = personID;
         this.personName = personName;
         this.personNumber = personNumber;
         this.personCollege = personCollege;
         this.isFavorited = isFavorited;
+        this.isRiderFavorited = isRiderFavorited;
     }
     public int getPersonID(){
         return personID;
@@ -53,5 +56,11 @@ public class Person{
     }
     public void setIsFavorited(int isFavorited){
         this.isFavorited = isFavorited;
+    }
+    public int getIsRiderFavorited(){
+        return isRiderFavorited;
+    }
+    public void setIsRiderFavorited(int isRiderFavorited){
+        this.isRiderFavorited = isRiderFavorited;
     }
 }
