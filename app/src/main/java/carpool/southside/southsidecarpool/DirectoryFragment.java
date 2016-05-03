@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 import java.util.ArrayList;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
@@ -34,6 +33,15 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         rvPeople = (RecyclerView) v.findViewById(R.id.directory_recycler_view);
         //Testing Purposes
         ArrayList<Person> people = new ArrayList<>();
+        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
+        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
+        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
         people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
         people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
         people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
@@ -114,6 +122,15 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         super.onResume();
         //Testing Purposes
         ArrayList<Person> people = new ArrayList<>();
+        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
+        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
+        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
+        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
         people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
         people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
         people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
