@@ -41,7 +41,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         PersonViewHolder viewHolder = new PersonViewHolder(view);
         return viewHolder;
     }
-    public void onBindViewHolder(final PersonViewHolder holder, int position){
+    public void onBindViewHolder(final PersonViewHolder holder, final int position){
         final int i = position;
         holder.personName.setText(people.get(position).getPersonName());
         holder.personNumber.setText(people.get(position).getPersonNumber());
@@ -56,6 +56,15 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
             @Override
             public void onClick(View v){
                 openBottomSheet(v, i);
+            }
+        });
+        holder.personContainer.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v){
+                ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.setText(people.get(position).getPersonNumber());
+                Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
     }
@@ -116,10 +125,9 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         copyButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO Snackbar over Bottom Navigation
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.setText(getIntentNumber(i));
-                Toast.makeText(v.getContext(), "Number Successfully Copied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
             }
         });

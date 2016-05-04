@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.github.ivbaranov.mli.MaterialLetterIcon;
 
-public class ShiftChildViewHolder extends ChildViewHolder {
+public class ShiftChildViewHolder extends ChildViewHolder{
     public TextView shiftName, shiftNumber;
     RelativeLayout shiftContainer;
     MaterialLetterIcon shiftImage;

@@ -33,6 +33,14 @@ public class Shift{
         this.shiftProvider = shiftProvider;
         this.shiftPerson = shiftPerson;
     }
+    public Shift(int shiftID, String shiftDay, String shiftType, String shiftTime, String shiftProvider, Person shiftPerson){
+        this.shiftID = shiftID;
+        this.shiftDay = shiftDay;
+        this.shiftType = shiftType;
+        this.shiftTime = shiftTime;
+        this.shiftProvider = shiftProvider;
+        this.shiftPerson = shiftPerson;
+    }
     public int getShiftID(){
         return shiftID;
     }

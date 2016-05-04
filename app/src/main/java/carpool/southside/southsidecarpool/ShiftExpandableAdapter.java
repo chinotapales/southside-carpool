@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.github.ivbaranov.mli.MaterialLetterIcon;
-
 import java.util.List;
 
 public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParentViewHolder, ShiftChildViewHolder>{
@@ -57,6 +56,15 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
             @Override
             public void onClick(View v){
                 openBottomSheet(v, shift);
+            }
+        });
+        shiftChildViewHolder.shiftContainer.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v){
+                ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.setText(shift.getShiftPersonNumber());
+                Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
     }
@@ -105,10 +113,9 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
         copyButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO Snackbar over Bottom Navigation
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.setText(shift.getShiftPersonNumber());
-                Toast.makeText(v.getContext(), "Number Successfully Copied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
             }
         });

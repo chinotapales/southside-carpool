@@ -1,6 +1,5 @@
 package carpool.southside.southsidecarpool;
 
-import android.graphics.Paint;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,7 +18,6 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
     private SegmentedGroup segmentedDays;
     private RecyclerView rSchedule;
     private ShiftExpandableAdapter sAdapter;
-    private Paint p = new Paint();
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.schedule_view, container, false);
         type = getArguments().getString("trip_id");
@@ -37,6 +35,9 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
         aTimes.add(new AssignedTime("8:00 AM", shifts));
         aTimes.add(new AssignedTime("9:15 AM", shifts));
         sAdapter = new ShiftExpandableAdapter(v.getContext(), aTimes);
+        sAdapter.setCustomParentAnimationViewId(R.id.schedule_expand_button);
+        sAdapter.setParentClickableViewAnimationDefaultDuration();
+        sAdapter.setParentAndIconExpandOnClick(true);
         rSchedule.setAdapter(sAdapter);
         rSchedule.setLayoutManager(new LinearLayoutManager(v.getContext()));
         return v;
@@ -62,5 +63,24 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
                 break;
             default:
         }
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Testing Purposes
+        ArrayList<Object> shifts = new ArrayList<>();
+        shifts.add(new Shift("Monday", "ToSchool", "9:00 AM", "Briana Buencamino", new Person("Briana Buencamino", "09175524466", "CSB", 0, 0)));
+        shifts.add(new Shift("Monday", "ToSchool", "9:00 AM", "Erika Mison", new Person("Erika Mison", "09175524466", "CSB", 0, 0)));
+        shifts.add(new Shift("Monday", "ToSchool", "9:00 AM", "Chino Tapales", new Person("Chino Tapales", "09175524466", "DLSU", 0, 0)));
+        ArrayList<ParentObject> aTimes = new ArrayList<>();
+        aTimes.add(new AssignedTime("7:30 AM", shifts));
+        aTimes.add(new AssignedTime("8:00 AM", shifts));
+        aTimes.add(new AssignedTime("9:15 AM", shifts));
+        sAdapter = new ShiftExpandableAdapter(getContext(), aTimes);
+        sAdapter.setCustomParentAnimationViewId(R.id.schedule_expand_button);
+        sAdapter.setParentClickableViewAnimationDefaultDuration();
+        sAdapter.setParentAndIconExpandOnClick(true);
+        rSchedule.setAdapter(sAdapter);
+        rSchedule.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }
