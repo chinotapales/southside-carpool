@@ -3,6 +3,7 @@ package carpool.southside.southsidecarpool;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,12 +19,15 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
     private SegmentedGroup segmentedDays;
     private RecyclerView rSchedule;
     private ShiftExpandableAdapter sAdapter;
+    private SwipeRefreshLayout dSwipeRefreshLayout;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.schedule_view, container, false);
         type = getArguments().getString("trip_id");
         System.out.println("ID Passed: " + type);
         segmentedDays = (SegmentedGroup) v.findViewById(R.id.segmented_days);
         segmentedDays.setOnCheckedChangeListener(this);
+        dSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.schedule_swipe_refresh_layout);
+        dSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         rSchedule = (RecyclerView) v.findViewById(R.id.schedule_recycler_view);
         //Testing Purposes
         ArrayList<Object> shifts = new ArrayList<>();
@@ -39,6 +43,12 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
         sAdapter.setParentClickableViewAnimationDefaultDuration();
         sAdapter.setParentAndIconExpandOnClick(true);
         rSchedule.setAdapter(sAdapter);
+        dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                //TODO Place Refresh Code Here
+            }
+        });
         rSchedule.setLayoutManager(new LinearLayoutManager(v.getContext()));
         return v;
     }
@@ -81,6 +91,12 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
         sAdapter.setParentClickableViewAnimationDefaultDuration();
         sAdapter.setParentAndIconExpandOnClick(true);
         rSchedule.setAdapter(sAdapter);
+        dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                //TODO Place Refresh Code Here
+            }
+        });
         rSchedule.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
+
 import java.util.ArrayList;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
@@ -25,11 +27,14 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
     private RecyclerView rvPeople;
     private PersonAdapter personAdapter;
     private SegmentedGroup segmentedSchool;
+    private SwipeRefreshLayout dSwipeRefreshLayout;
     private Paint p = new Paint();
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.directory_view, container, false);
         segmentedSchool = (SegmentedGroup) v.findViewById(R.id.segmented_directory);
         segmentedSchool.setOnCheckedChangeListener(this);
+        dSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.directory_swipe_refresh_layout);
+        dSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         rvPeople = (RecyclerView) v.findViewById(R.id.directory_recycler_view);
         //Testing Purposes
         ArrayList<Person> people = new ArrayList<>();
@@ -47,6 +52,12 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
         personAdapter = new PersonAdapter(people);
         rvPeople.setAdapter(personAdapter);
+        dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                //TODO Place Refresh Code Here
+            }
+        });
         rvPeople.setLayoutManager(new LinearLayoutManager(v.getContext()));
         initSwipe();
         return v;
@@ -136,6 +147,12 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
         personAdapter = new PersonAdapter(people);
         rvPeople.setAdapter(personAdapter);
+        dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                //TODO Place Refresh Code Here
+            }
+        });
         rvPeople.setLayoutManager(new LinearLayoutManager(getContext()));
         initSwipe();
     }

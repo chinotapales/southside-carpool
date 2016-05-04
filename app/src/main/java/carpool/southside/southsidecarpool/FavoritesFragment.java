@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -25,11 +26,14 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
     private RecyclerView rvFavorites;
     private PersonAdapter personAdapter;
     private SegmentedGroup segmentedFavorites;
+    private SwipeRefreshLayout dSwipeRefreshLayout;
     private Paint p = new Paint();
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.favorite_view, container, false);
         segmentedFavorites = (SegmentedGroup) v.findViewById(R.id.segmented_favorites);
         segmentedFavorites.setOnCheckedChangeListener(this);
+        dSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.favorite_swipe_refresh_layout);
+        dSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         rvFavorites = (RecyclerView) v.findViewById(R.id.favorite_recycler_view);
         //Testing Purposes
         ArrayList<Person> people = new ArrayList<>();
@@ -38,6 +42,12 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
         personAdapter = new PersonAdapter(people);
         rvFavorites.setAdapter(personAdapter);
+        dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                //TODO Place Refresh Code Here
+            }
+        });
         rvFavorites.setLayoutManager(new LinearLayoutManager(v.getContext()));
         initSwipe();
         return v;
@@ -116,6 +126,12 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
         personAdapter = new PersonAdapter(people);
         rvFavorites.setAdapter(personAdapter);
+        dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                //TODO Place Refresh Code Here
+            }
+        });
         rvFavorites.setLayoutManager(new LinearLayoutManager(getContext()));
         initSwipe();
     }
