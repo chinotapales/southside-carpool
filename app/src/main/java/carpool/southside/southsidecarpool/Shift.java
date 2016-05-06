@@ -13,6 +13,8 @@ public class Shift{
     private String shiftTime;
     private String shiftProvider;
     private Person shiftPerson;
+    public Shift(){
+    }
     public Shift(String shiftDay, String shiftType, String shiftTime, String shiftProvider){
         this.shiftDay = shiftDay;
         this.shiftType = shiftType;

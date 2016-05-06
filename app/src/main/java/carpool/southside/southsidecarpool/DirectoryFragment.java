@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-
 import java.util.ArrayList;
 import info.hoang8f.android.segmented.SegmentedGroup;
 

@@ -12,6 +12,8 @@ public class Person{
     private String personName;
     private String personNumber;
     private String personCollege;
+    public Person(){
+    }
     public Person(String personName, String personNumber, String personCollege, int isFavorited, int isRiderFavorited){
         this.personName = personName;
         this.personNumber = personNumber;
