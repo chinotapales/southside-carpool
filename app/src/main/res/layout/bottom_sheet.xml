@@ -85,7 +85,6 @@
             android:layout_marginRight="24dp"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/heart_bottom"
             android:tint="@color/colorGray"/>
         <TextView
             android:id="@+id/heart_bottom_text"
@@ -94,8 +93,7 @@
             android:layout_toRightOf="@id/heart_bottom_icon"
             android:layout_centerVertical="true"
             android:textSize="15sp"
-            android:textColor="@color/colorBlack"
-            android:text="Add to My Providers"/>
+            android:textColor="@color/colorBlack"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/heart_riders_bottom"

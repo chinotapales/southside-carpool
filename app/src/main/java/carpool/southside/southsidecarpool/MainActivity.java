@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity{
     private Toolbar toolbar;
     private AHBottomNavigation bottomNavigation;
     private ArrayList<AHBottomNavigationItem> ahBottomNavigationItems = new ArrayList<>();
+    private DatabaseOpenHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity{
         bottomNavigation.setAccentColor(Color.parseColor("#4CAF50"));
         bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
         bottomNavigation.setCurrentItem(0);
+        //Pushing of dummy data
+        dbHelper = new DatabaseOpenHelper(this);
+        dbHelper.deleteAllPeople();
+        dbHelper.insertDummyData();
         final ScheduleFragment schedule = new ScheduleFragment();
         final DirectoryFragment directory = new DirectoryFragment();
         final FavoritesFragment favorites = new FavoritesFragment();

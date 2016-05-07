@@ -37,6 +37,33 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         db.execSQL(sql);
         onCreate(db);
     }
+    public void insertDummyData(){
+        SQLiteDatabase db =  getWritableDatabase();
+        ContentValues contentValues  = new ContentValues();
+
+        contentValues.put(Person.COL_NAME, "Chino Tapales");
+        contentValues.put(Person.COL_NUMBER, "09175524466");
+        contentValues.put(Person.COL_COLLEGE, "DLSU");
+        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
+        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
+        long id = db.insert(Person.TABLE_NAME, null, contentValues);
+
+        contentValues.put(Person.COL_NAME, "Erika Mison");
+        contentValues.put(Person.COL_NUMBER, "09177945907");
+        contentValues.put(Person.COL_COLLEGE, "CSB");
+        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
+        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
+        id = db.insert(Person.TABLE_NAME, null, contentValues);
+
+        contentValues.put(Person.COL_NAME, "Briana Buencamino");
+        contentValues.put(Person.COL_NUMBER, "09175055520");
+        contentValues.put(Person.COL_COLLEGE, "CSB");
+        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
+        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
+        id = db.insert(Person.TABLE_NAME, null, contentValues);
+
+        db.close();
+    }
     public void deleteAllPeople(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + Person.TABLE_NAME);
@@ -84,6 +111,56 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 contentValues,
                 Person.COL_ID + " =? ",
                 new String[]{String.valueOf(p.getPersonID())});
+    }
+    public int updateFavoriteProvider(int id, int favorited){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Person.COL_PROVIDER_FAVORITED, favorited);
+        return getWritableDatabase().update(Person.TABLE_NAME,
+                contentValues,
+                Person.COL_ID + " =? ",
+                new String[]{String.valueOf(id)});
+    }
+    public int updateFavoriteRider(int id, int favorited){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Person.COL_RIDER_FAVORITED, favorited);
+        return getWritableDatabase().update(Person.TABLE_NAME,
+                contentValues,
+                Person.COL_ID + " =? ",
+                new String[]{String.valueOf(id)});
+    }
+    public boolean getIsFavorited(int id){
+        int isFavorited = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(Person.TABLE_NAME,
+                null,
+                Person.COL_ID + " =? ",
+                new String[]{String.valueOf(id)},
+                null, null, null);
+        if(cursor.moveToFirst()){
+            isFavorited = cursor.getInt(cursor.getColumnIndex(Person.COL_PROVIDER_FAVORITED));
+        }
+        cursor.close();
+        if(isFavorited == 0){
+            return false;
+        }
+        else return true;
+    }
+    public boolean getIsRiderFavorited(int id){
+        int isFavorited = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(Person.TABLE_NAME,
+                null,
+                Person.COL_ID + " =? ",
+                new String[]{String.valueOf(id)},
+                null, null, null);
+        if(cursor.moveToFirst()){
+            isFavorited = cursor.getInt(cursor.getColumnIndex(Person.COL_RIDER_FAVORITED));
+        }
+        cursor.close();
+        if(isFavorited == 0){
+            return false;
+        }
+        else return true;
     }
     public Person getPerson(int id){
         Person p = null;
@@ -156,21 +233,23 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 null, null, null);
         return cursor;
     }
-    public Cursor getAllPeopleByFavProviders(int favorite){
+    public Cursor getAllPeopleByFavProviders(){
+        int pos = 1;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(Person.TABLE_NAME,
                 null,
                 Person.COL_PROVIDER_FAVORITED + " =? ",
-                new String[]{String.valueOf(favorite)},
+                new String[]{String.valueOf(pos)},
                 null, null, null);
         return cursor;
     }
-    public Cursor getAllPeopleByFavRiders(int favorite){
+    public Cursor getAllPeopleByFavRiders(){
+        int pos = 1;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(Person.TABLE_NAME,
                 null,
                 Person.COL_RIDER_FAVORITED + " =? ",
-                new String[]{String.valueOf(favorite)},
+                new String[]{String.valueOf(pos)},
                 null, null, null);
         return cursor;
     }
@@ -179,6 +258,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         Cursor cursor = db.query(Shift.TABLE_NAME, null, null, null, null, null, null);
         return cursor;
     }
+    /*
     public Cursor getAllShiftsByDayTypeAndTime(String day, String type, String time){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(Shift.TABLE_NAME,
@@ -188,4 +268,5 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 null, null, null);
         return cursor;
     }
+    */
 }

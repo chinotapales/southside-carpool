@@ -1,6 +1,7 @@
 package carpool.southside.southsidecarpool;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -19,12 +20,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import java.util.ArrayList;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
+    private int previous = 0;
     private RecyclerView rvPeople;
-    private PersonAdapter personAdapter;
+    private PersonCursorAdapter personAdapter;
+    private DatabaseOpenHelper dbHelper;
     private SegmentedGroup segmentedSchool;
     private SwipeRefreshLayout dSwipeRefreshLayout;
     private Paint p = new Paint();
@@ -34,22 +36,9 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         segmentedSchool.setOnCheckedChangeListener(this);
         dSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.directory_swipe_refresh_layout);
         dSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        dbHelper = new DatabaseOpenHelper(v.getContext());
         rvPeople = (RecyclerView) v.findViewById(R.id.directory_recycler_view);
-        //Testing Purposes
-        ArrayList<Person> people = new ArrayList<>();
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
-        personAdapter = new PersonAdapter(people);
+        personAdapter = new PersonCursorAdapter(v.getContext(), dbHelper.getAllPeople());
         rvPeople.setAdapter(personAdapter);
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
@@ -63,12 +52,18 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
     }
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId){
-        switch (checkedId){
+        switch(checkedId){
             case R.id.all_button:
+                personAdapter.swapCursor(dbHelper.getAllPeople());
+                previous = 0;
                 break;
             case R.id.dlsu_button:
+                personAdapter.swapCursor(dbHelper.getAllPeopleByCollege("DLSU"));
+                previous = 1;
                 break;
             case R.id.csb_button:
+                personAdapter.swapCursor(dbHelper.getAllPeopleByCollege("CSB"));
+                previous = 2;
                 break;
             default:
         }
@@ -130,29 +125,18 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
     @Override
     public void onResume(){
         super.onResume();
-        //Testing Purposes
-        ArrayList<Person> people = new ArrayList<>();
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
-        people.add(new Person("Briana Buencamino", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Erika Mison", "09175524466", "CSB", 0, 0));
-        people.add(new Person("Chino Tapales", "09175524466", "DLSU", 0, 0));
-        personAdapter = new PersonAdapter(people);
-        rvPeople.setAdapter(personAdapter);
-        dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-            @Override
-            public void onRefresh(){
-                //TODO Place Refresh Code Here
-            }
-        });
-        rvPeople.setLayoutManager(new LinearLayoutManager(getContext()));
+        Cursor cursor;
+        switch(previous){
+            case 0: cursor = dbHelper.getAllPeople();
+                    personAdapter.swapCursor(cursor);
+                    break;
+            case 1: cursor = dbHelper.getAllPeopleByCollege("DLSU");
+                    personAdapter.swapCursor(cursor);
+                    break;
+            case 2: cursor = dbHelper.getAllPeopleByCollege("CSB");
+                    personAdapter.swapCursor(cursor);
+                    break;
+        }
         initSwipe();
     }
 }
