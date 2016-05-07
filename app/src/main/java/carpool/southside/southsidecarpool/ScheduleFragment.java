@@ -20,20 +20,21 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
     private RecyclerView rSchedule;
     private ShiftExpandableAdapter sAdapter;
     private SwipeRefreshLayout dSwipeRefreshLayout;
+    private DatabaseOpenHelper dbHelper;
+    private ArrayList<Object> shifts;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.schedule_view, container, false);
         type = getArguments().getString("trip_id");
-        System.out.println("ID Passed: " + type);
         segmentedDays = (SegmentedGroup) v.findViewById(R.id.segmented_days);
         segmentedDays.setOnCheckedChangeListener(this);
         dSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.schedule_swipe_refresh_layout);
         dSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         rSchedule = (RecyclerView) v.findViewById(R.id.schedule_recycler_view);
-        //Testing Purposes
-        ArrayList<Object> shifts = new ArrayList<>();
-        shifts.add(new Shift("Monday", "ToSchool", "9:00 AM", "Briana Buencamino", new Person("Briana Buencamino", "09175524466", "CSB", 0, 0)));
-        shifts.add(new Shift("Monday", "ToSchool", "9:00 AM", "Erika Mison", new Person("Erika Mison", "09175524466", "CSB", 0, 0)));
-        shifts.add(new Shift("Monday", "ToSchool", "9:00 AM", "Chino Tapales", new Person("Chino Tapales", "09175524466", "DLSU", 0, 0)));
+        dbHelper = new DatabaseOpenHelper(v.getContext());
+        if(shifts != null){
+            shifts.clear();
+        }
+        shifts = dbHelper.getArrayListShifts(type);
         ArrayList<ParentObject> aTimes = new ArrayList<>();
         aTimes.add(new AssignedTime("7:30 AM", shifts));
         aTimes.add(new AssignedTime("8:00 AM", shifts));
@@ -55,6 +56,26 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
     public void setType(String type){
         this.type = type;
         System.out.println("ID Changed: " + this.type);
+        if(shifts != null){
+            shifts.clear();
+        }
+        shifts = dbHelper.getArrayListShifts(this.type);
+        ArrayList<ParentObject> aTimes = new ArrayList<>();
+        aTimes.add(new AssignedTime("7:30 AM", shifts));
+        aTimes.add(new AssignedTime("8:00 AM", shifts));
+        aTimes.add(new AssignedTime("9:15 AM", shifts));
+        sAdapter = new ShiftExpandableAdapter(getContext(), aTimes);
+        sAdapter.setCustomParentAnimationViewId(R.id.schedule_expand_button);
+        sAdapter.setParentClickableViewAnimationDefaultDuration();
+        sAdapter.setParentAndIconExpandOnClick(true);
+        rSchedule.setAdapter(sAdapter);
+        dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                //TODO Place Refresh Code Here
+            }
+        });
+        rSchedule.setLayoutManager(new LinearLayoutManager(getContext()));
     }
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId){
@@ -78,10 +99,10 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
     public void onResume(){
         super.onResume();
         //Testing Purposes
-        ArrayList<Object> shifts = new ArrayList<>();
-        shifts.add(new Shift("Monday", "ToSchool", "9:00 AM", "Briana Buencamino", new Person("Briana Buencamino", "09175524466", "CSB", 0, 0)));
-        shifts.add(new Shift("Monday", "ToSchool", "9:00 AM", "Erika Mison", new Person("Erika Mison", "09175524466", "CSB", 0, 0)));
-        shifts.add(new Shift("Monday", "ToSchool", "9:00 AM", "Chino Tapales", new Person("Chino Tapales", "09175524466", "DLSU", 0, 0)));
+        if(shifts != null){
+            shifts.clear();
+        }
+        shifts = dbHelper.getArrayListShifts(type);
         ArrayList<ParentObject> aTimes = new ArrayList<>();
         aTimes.add(new AssignedTime("7:30 AM", shifts));
         aTimes.add(new AssignedTime("8:00 AM", shifts));

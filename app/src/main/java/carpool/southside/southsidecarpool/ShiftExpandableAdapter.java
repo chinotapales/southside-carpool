@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,8 +21,10 @@ import com.github.ivbaranov.mli.MaterialLetterIcon;
 import java.util.List;
 
 public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParentViewHolder, ShiftChildViewHolder>{
+    private DatabaseOpenHelper dbHelper;
     public ShiftExpandableAdapter(Context context, List<ParentObject> parentItemList){
         super(context, parentItemList);
+        dbHelper = new DatabaseOpenHelper(context);
     }
     @Override
     public ShiftParentViewHolder onCreateParentViewHolder(ViewGroup viewGroup){
@@ -44,7 +47,7 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
     public void onBindChildViewHolder(ShiftChildViewHolder shiftChildViewHolder, int i, Object o){
         final Shift shift = (Shift) o;
         shiftChildViewHolder.shiftName.setText(shift.getShiftProvider());
-        shiftChildViewHolder.shiftNumber.setText(shift.getShiftPersonNumber());
+        shiftChildViewHolder.shiftNumber.setText(dbHelper.getNumberFromName(shift.getShiftProvider()));
         shiftChildViewHolder.shiftImage.setShapeColor(Color.parseColor("#4CAF50"));
         shiftChildViewHolder.shiftImage.setShapeType(MaterialLetterIcon.Shape.CIRCLE);
         shiftChildViewHolder.shiftImage.setLetterColor(Color.parseColor("#FFFFFF"));
@@ -62,7 +65,7 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
             @Override
             public boolean onLongClick(View v){
                 ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboard.setText(shift.getShiftPersonNumber());
+                clipboard.setText(dbHelper.getNumberFromName(shift.getShiftProvider()));
                 Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -92,6 +95,28 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
         RelativeLayout messageButton = (RelativeLayout) view.findViewById(R.id.message_bottom);
         TextView messageText = (TextView) view.findViewById(R.id.message_bottom_text);
         messageText.setText("Message " + shift.getShiftProvider());
+        ImageView heartImage = (ImageView) view.findViewById(R.id.heart_bottom_icon);
+        TextView heartText = (TextView) view.findViewById(R.id.heart_bottom_text);
+        ImageView heartRiderImage = (ImageView) view.findViewById(R.id.heart_riders_bottom_icon);
+        TextView heartRiderText = (TextView) view.findViewById(R.id.heart_riders_bottom_text);
+        final boolean isFavorited = dbHelper.getIsFavoritedByName(shift.getShiftProvider());
+        final boolean isRiderFavorited = dbHelper.getIsRiderFavoritedByName(shift.getShiftProvider());
+        if(!isFavorited){
+            heartImage.setImageResource(R.drawable.heart_bottom);
+            heartText.setText("Add to My Providers");
+        }
+        else{
+            heartImage.setImageResource(R.drawable.unheart_bottom);
+            heartText.setText("Remove from My Providers");
+        }
+        if(!isRiderFavorited){
+            heartRiderImage.setImageResource(R.drawable.heart_bottom);
+            heartRiderText.setText("Add to My Riders");
+        }
+        else{
+            heartRiderImage.setImageResource(R.drawable.unheart_bottom);
+            heartRiderText.setText("Remove from My Riders");
+        }
         final Dialog mBottomSheetDialog = new Dialog(v.getContext(), R.style.MaterialDialogSheet);
         mBottomSheetDialog.setContentView(view);
         mBottomSheetDialog.setCancelable(true);
@@ -100,13 +125,25 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
         mBottomSheetDialog.show();
         heartButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
+                if(!isFavorited){
+                    dbHelper.updateFavoriteProviderByName(shift.getShiftProvider(), 1);
+                }
+                else{
+                    dbHelper.updateFavoriteProviderByName(shift.getShiftProvider(), 0);
+                }
                 mBottomSheetDialog.dismiss();
             }
         });
         heartRidersButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
+                if(!isRiderFavorited){
+                    dbHelper.updateFavoriteRiderByName(shift.getShiftProvider(), 1);
+                }
+                else{
+                    dbHelper.updateFavoriteRiderByName(shift.getShiftProvider(), 0);
+                }
                 mBottomSheetDialog.dismiss();
             }
         });
@@ -114,7 +151,7 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
             @Override
             public void onClick(View v){
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboard.setText(shift.getShiftPersonNumber());
+                clipboard.setText(dbHelper.getNumberFromName(shift.getShiftProvider()));
                 Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
             }
@@ -122,7 +159,7 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
         callButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String number = "tel:" + shift.getShiftPersonNumber();
+                String number = "tel:" + dbHelper.getNumberFromName(shift.getShiftProvider());
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_CALL);
                 intent.setData(Uri.parse(number));
@@ -133,7 +170,7 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String number = "smsto:" + shift.getShiftPersonNumber();
+                String number = "smsto:" + dbHelper.getNumberFromName(shift.getShiftProvider());
                 String name[] = shift.getShiftProvider().split(" ");
                 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(number));
                 intent.putExtra("sms_body", "Hey " + name[0] + ", ");

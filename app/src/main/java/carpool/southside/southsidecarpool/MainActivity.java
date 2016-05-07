@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity{
         bottomNavigation.setCurrentItem(0);
         //Pushing of dummy data
         dbHelper = new DatabaseOpenHelper(this);
-        dbHelper.deleteAllPeople();
+        dbHelper.deleteAllData();
         dbHelper.insertDummyData();
         final ScheduleFragment schedule = new ScheduleFragment();
         final DirectoryFragment directory = new DirectoryFragment();

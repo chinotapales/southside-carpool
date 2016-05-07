@@ -12,7 +12,6 @@ public class Shift{
     private String shiftType;
     private String shiftTime;
     private String shiftProvider;
-    private Person shiftPerson;
     public Shift(){
     }
     public Shift(String shiftDay, String shiftType, String shiftTime, String shiftProvider){
@@ -21,27 +20,12 @@ public class Shift{
         this.shiftTime = shiftTime;
         this.shiftProvider = shiftProvider;
     }
-    public Shift(int shiftID, String shiftDay, String shiftType, String shiftTime, String shiftProvider) {
+    public Shift(int shiftID, String shiftDay, String shiftType, String shiftTime, String shiftProvider){
         this.shiftID = shiftID;
         this.shiftDay = shiftDay;
         this.shiftType = shiftType;
         this.shiftTime = shiftTime;
         this.shiftProvider = shiftProvider;
-    }
-    public Shift(String shiftDay, String shiftType, String shiftTime, String shiftProvider, Person shiftPerson){
-        this.shiftDay = shiftDay;
-        this.shiftType = shiftType;
-        this.shiftTime = shiftTime;
-        this.shiftProvider = shiftProvider;
-        this.shiftPerson = shiftPerson;
-    }
-    public Shift(int shiftID, String shiftDay, String shiftType, String shiftTime, String shiftProvider, Person shiftPerson){
-        this.shiftID = shiftID;
-        this.shiftDay = shiftDay;
-        this.shiftType = shiftType;
-        this.shiftTime = shiftTime;
-        this.shiftProvider = shiftProvider;
-        this.shiftPerson = shiftPerson;
     }
     public int getShiftID(){
         return shiftID;
@@ -72,14 +56,5 @@ public class Shift{
     }
     public void setShiftProvider(String shiftProvider){
         this.shiftProvider = shiftProvider;
-    }
-    public Person getShiftPerson(){
-        return shiftPerson;
-    }
-    public void setShiftPerson(Person shiftPerson){
-        this.shiftPerson = shiftPerson;
-    }
-    public String getShiftPersonNumber(){
-        return shiftPerson.getPersonNumber();
     }
 }
