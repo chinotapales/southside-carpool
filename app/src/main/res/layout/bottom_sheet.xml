@@ -105,7 +105,6 @@
             android:layout_marginRight="24dp"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/heart_bottom"
             android:tint="#747474"/>
         <TextView
             android:id="@+id/heart_riders_bottom_text"
@@ -114,8 +113,7 @@
             android:layout_toRightOf="@id/heart_riders_bottom_icon"
             android:layout_centerVertical="true"
             android:textSize="15sp"
-            android:textColor="@color/colorBlack"
-            android:text="Add to My Riders"/>
+            android:textColor="@color/colorBlack"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

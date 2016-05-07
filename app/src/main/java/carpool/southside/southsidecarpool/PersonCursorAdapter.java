@@ -23,9 +23,11 @@ public class PersonCursorAdapter extends CursorRecyclerViewAdapter<PersonCursorA
     private DatabaseOpenHelper dbHelper;
     private Context context;
     private Cursor c;
-    public PersonCursorAdapter(Context context, Cursor cursor){
+    private int type;
+    public PersonCursorAdapter(Context context, Cursor cursor, int type){
         super(context, cursor);
         this.context = context;
+        this.type = type;
         dbHelper = new DatabaseOpenHelper(context);
         c = cursor;
     }
@@ -142,6 +144,9 @@ public class PersonCursorAdapter extends CursorRecyclerViewAdapter<PersonCursorA
                 else{
                     dbHelper.updateFavoriteProvider(cursor.getInt(cursor.getColumnIndex(Person.COL_ID)), 0);
                 }
+                if(type == 1){
+                    swapCursor(dbHelper.getAllPeopleByFavProviders());
+                }
                 mBottomSheetDialog.dismiss();
             }
         });
@@ -153,6 +158,9 @@ public class PersonCursorAdapter extends CursorRecyclerViewAdapter<PersonCursorA
                 }
                 else{
                     dbHelper.updateFavoriteRider(cursor.getInt(cursor.getColumnIndex(Person.COL_ID)), 0);
+                }
+                if(type == 1){
+                    swapCursor(dbHelper.getAllPeopleByFavRiders());
                 }
                 mBottomSheetDialog.dismiss();
             }

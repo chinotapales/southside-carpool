@@ -38,7 +38,7 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         dSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         dbHelper = new DatabaseOpenHelper(v.getContext());
         rvFavorites = (RecyclerView) v.findViewById(R.id.favorite_recycler_view);
-        personAdapter = new PersonCursorAdapter(v.getContext(), dbHelper.getAllPeopleByFavProviders());
+        personAdapter = new PersonCursorAdapter(v.getContext(), dbHelper.getAllPeopleByFavProviders(), 1);
         rvFavorites.setAdapter(personAdapter);
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override

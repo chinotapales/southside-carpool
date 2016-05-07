@@ -38,7 +38,7 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         dSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         dbHelper = new DatabaseOpenHelper(v.getContext());
         rvPeople = (RecyclerView) v.findViewById(R.id.directory_recycler_view);
-        personAdapter = new PersonCursorAdapter(v.getContext(), dbHelper.getAllPeople());
+        personAdapter = new PersonCursorAdapter(v.getContext(), dbHelper.getAllPeople(), 0);
         rvPeople.setAdapter(personAdapter);
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
