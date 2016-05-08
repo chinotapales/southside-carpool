@@ -351,7 +351,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
     }
     public Cursor getAllPeople(){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(Person.TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = db.query(Person.TABLE_NAME, null, null, null, null, null, Person.COL_NAME + " ASC");
         return cursor;
     }
     public Cursor getAllPeopleByCollege(String college){
@@ -360,7 +360,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 null,
                 Person.COL_COLLEGE + " =? ",
                 new String[]{college},
-                null, null, null);
+                null, null, Person.COL_NAME + " ASC");
         return cursor;
     }
     public Cursor getAllPeopleByFavProviders(){
@@ -370,7 +370,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 null,
                 Person.COL_PROVIDER_FAVORITED + " =? ",
                 new String[]{String.valueOf(pos)},
-                null, null, null);
+                null, null, Person.COL_NAME + " ASC");
         return cursor;
     }
     public Cursor getAllPeopleByFavRiders(){
@@ -380,7 +380,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 null,
                 Person.COL_RIDER_FAVORITED + " =? ",
                 new String[]{String.valueOf(pos)},
-                null, null, null);
+                null, null, Person.COL_NAME + " ASC");
         return cursor;
     }
     public ArrayList<ParentObject> getAssignedTimesByDayAndType(String day, String type){
@@ -414,7 +414,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 null,
                 Shift.COL_DAY + " =? AND " + Shift.COL_TYPE + " =? ",
                 new String[]{day, type},
-                null, null, null);
+                null, null, Shift.COL_PROVIDER + " ASC");
         if(cursor != null) {
             while(cursor.moveToNext()){
                 Shift s = new Shift();
