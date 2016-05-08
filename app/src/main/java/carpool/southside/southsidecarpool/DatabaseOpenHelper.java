@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import java.util.ArrayList;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper{
@@ -13,7 +14,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         super(context, SCHEMA, null, 1);
     }
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db){
         String sql = "CREATE TABLE " + Person.TABLE_NAME + " ("
                 + Person.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + Person.COL_NAME + " TEXT, "
@@ -74,8 +75,43 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         contentValues = new ContentValues();
         contentValues.put(Shift.COL_DAY, "Monday");
         contentValues.put(Shift.COL_TYPE, "BackHome");
-        contentValues.put(Shift.COL_TIME, "9:00 AM");
+        contentValues.put(Shift.COL_TIME, "9:40 AM");
         contentValues.put(Shift.COL_PROVIDER, "Briana Buencamino");
+        id = db.insert(Shift.TABLE_NAME, null, contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(Shift.COL_DAY, "Monday");
+        contentValues.put(Shift.COL_TYPE, "BackHome");
+        contentValues.put(Shift.COL_TIME, "9:40 AM");
+        contentValues.put(Shift.COL_PROVIDER, "Erika Mison");
+        id = db.insert(Shift.TABLE_NAME, null, contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(Shift.COL_DAY, "Wednesday");
+        contentValues.put(Shift.COL_TYPE, "BackHome");
+        contentValues.put(Shift.COL_TIME, "11:20 AM");
+        contentValues.put(Shift.COL_PROVIDER, "Victor Buencamino");
+        id = db.insert(Shift.TABLE_NAME, null, contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(Shift.COL_DAY, "Wednesday");
+        contentValues.put(Shift.COL_TYPE, "BackHome");
+        contentValues.put(Shift.COL_TIME, "11:20 AM");
+        contentValues.put(Shift.COL_PROVIDER, "Lucas Buencamino");
+        id = db.insert(Shift.TABLE_NAME, null, contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(Shift.COL_DAY, "Wednesday");
+        contentValues.put(Shift.COL_TYPE, "BackHome");
+        contentValues.put(Shift.COL_TIME, "11:20 AM");
+        contentValues.put(Shift.COL_PROVIDER, "Randolph Yu");
+        id = db.insert(Shift.TABLE_NAME, null, contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(Shift.COL_DAY, "Monday");
+        contentValues.put(Shift.COL_TYPE, "BackHome");
+        contentValues.put(Shift.COL_TIME, "1:00 PM");
+        contentValues.put(Shift.COL_PROVIDER, "Chino Tapales");
         id = db.insert(Shift.TABLE_NAME, null, contentValues);
 
         db.close();
@@ -127,6 +163,17 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 contentValues,
                 Person.COL_ID + " =? ",
                 new String[]{String.valueOf(p.getPersonID())});
+    }
+    public int updateShift(Shift s){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Shift.COL_DAY, s.getShiftDay());
+        contentValues.put(Shift.COL_TYPE, s.getShiftType());
+        contentValues.put(Shift.COL_TIME, s.getShiftTime());
+        contentValues.put(Shift.COL_PROVIDER, s.getShiftProvider());
+        return getWritableDatabase().update(Shift.TABLE_NAME,
+                contentValues,
+                Shift.COL_ID + " =? ",
+                new String[]{String.valueOf(s.getShiftID())});
     }
     public int updateFavoriteProvider(int id, int favorited){
         ContentValues contentValues = new ContentValues();
@@ -312,27 +359,41 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 null, null, null);
         return cursor;
     }
-    public Cursor getAllShifts(){
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(Shift.TABLE_NAME, null, null, null, null, null, null);
-        return cursor;
-    }
-    public Cursor getAllShiftsByType(String type){
+    public ArrayList<ParentObject> getAssignedTimesByDayAndType(String day, String type){
+        String previous= "";
+        ArrayList<ParentObject> times = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(Shift.TABLE_NAME,
                 null,
-                Shift.COL_TYPE + " =? ",
-                new String[]{type},
+                Shift.COL_DAY + " =? AND " + Shift.COL_TYPE + " =? ",
+                new String[]{day, type},
                 null, null, null);
-        return cursor;
-    }
-    public ArrayList<Object> getArrayListShifts(String type){
-        ArrayList<Object> shifts = new ArrayList<>();
-        Shift s = null;
-        Cursor cursor = getAllShiftsByType(type);
         if(cursor != null) {
             while(cursor.moveToNext()){
-                s = new Shift();
+                if(previous.equals(cursor.getString(cursor.getColumnIndex(Shift.COL_TIME)))){
+                }
+                else{
+                    AssignedTime a = new AssignedTime();
+                    a.setShiftTime(cursor.getString(cursor.getColumnIndex(Shift.COL_TIME)));
+                    times.add(a);
+                }
+                previous = cursor.getString(cursor.getColumnIndex(Shift.COL_TIME));
+            }
+            cursor.close();
+        }
+        return times;
+    }
+    public ArrayList<Object> getArrayListShifts(String day, String type){
+        ArrayList<Object> shifts = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(Shift.TABLE_NAME,
+                null,
+                Shift.COL_DAY + " =? AND " + Shift.COL_TYPE + " =? ",
+                new String[]{day, type},
+                null, null, null);
+        if(cursor != null) {
+            while(cursor.moveToNext()){
+                Shift s = new Shift();
                 s.setShiftDay(cursor.getString(cursor.getColumnIndex(Shift.COL_DAY)));
                 s.setShiftType(cursor.getString(cursor.getColumnIndex(Shift.COL_TYPE)));
                 s.setShiftTime(cursor.getString(cursor.getColumnIndex(Shift.COL_TIME)));

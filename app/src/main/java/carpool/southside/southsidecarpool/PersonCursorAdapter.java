@@ -69,9 +69,9 @@ public class PersonCursorAdapter extends CursorRecyclerViewAdapter<PersonCursorA
         holder.personContainer.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v){
-                ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.setText(getCursor().getString(getCursor().getColumnIndex(Person.COL_NUMBER)));
-                Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Copied to Clipboard", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -129,7 +129,7 @@ public class PersonCursorAdapter extends CursorRecyclerViewAdapter<PersonCursorA
             heartRiderImage.setImageResource(R.drawable.unheart_bottom);
             heartRiderText.setText("Remove from My Riders");
         }
-        final Dialog mBottomSheetDialog = new Dialog(v.getContext(), R.style.MaterialDialogSheet);
+        final Dialog mBottomSheetDialog = new Dialog(context, R.style.MaterialDialogSheet);
         mBottomSheetDialog.setContentView(view);
         mBottomSheetDialog.setCancelable(true);
         mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -170,7 +170,7 @@ public class PersonCursorAdapter extends CursorRecyclerViewAdapter<PersonCursorA
             public void onClick(View v){
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.setText(cursor.getString(cursor.getColumnIndex(Person.COL_NUMBER)));
-                Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Copied to Clipboard", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
             }
         });

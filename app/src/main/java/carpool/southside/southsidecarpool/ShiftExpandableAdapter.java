@@ -17,14 +17,41 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
+import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.github.ivbaranov.mli.MaterialLetterIcon;
 import java.util.List;
 
-public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParentViewHolder, ShiftChildViewHolder>{
+public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftExpandableAdapter.ShiftParentViewHolder, ShiftExpandableAdapter.ShiftChildViewHolder>{
+    private Context context;
     private DatabaseOpenHelper dbHelper;
     public ShiftExpandableAdapter(Context context, List<ParentObject> parentItemList){
         super(context, parentItemList);
+        this.context = context;
         dbHelper = new DatabaseOpenHelper(context);
+    }
+    public class ShiftParentViewHolder extends ParentViewHolder{
+        public RelativeLayout scheduleParentContainer;
+        public TextView scheduleParentName;
+        public ImageView expandButton;
+        public ShiftParentViewHolder(View itemView){
+            super(itemView);
+            scheduleParentContainer = (RelativeLayout) itemView.findViewById(R.id.schedule_parent_container);
+            scheduleParentName = (TextView) itemView.findViewById(R.id.schedule_parent_name);
+            expandButton = (ImageView) itemView.findViewById(R.id.schedule_expand_button);
+        }
+    }
+    public class ShiftChildViewHolder extends ChildViewHolder{
+        public TextView shiftName, shiftNumber;
+        RelativeLayout shiftContainer;
+        MaterialLetterIcon shiftImage;
+        public ShiftChildViewHolder(View itemView){
+            super(itemView);
+            shiftName = (TextView) itemView.findViewById(R.id.directory_name);
+            shiftNumber = (TextView) itemView.findViewById(R.id.directory_number);
+            shiftImage = (MaterialLetterIcon) itemView.findViewById(R.id.directory_image);
+            shiftContainer = (RelativeLayout) itemView.findViewById(R.id.directory_container);
+        }
     }
     @Override
     public ShiftParentViewHolder onCreateParentViewHolder(ViewGroup viewGroup){
@@ -64,16 +91,15 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
         shiftChildViewHolder.shiftContainer.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v){
-                ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.setText(dbHelper.getNumberFromName(shift.getShiftProvider()));
-                Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Copied to Clipboard", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
     }
     public void openBottomSheet(View v, Shift s){
         final Shift shift = s;
-        final Context context = v.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.bottom_sheet, null);
         MaterialLetterIcon bottomImage = (MaterialLetterIcon) view.findViewById(R.id.image_bottom);
@@ -117,7 +143,7 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
             heartRiderImage.setImageResource(R.drawable.unheart_bottom);
             heartRiderText.setText("Remove from My Riders");
         }
-        final Dialog mBottomSheetDialog = new Dialog(v.getContext(), R.style.MaterialDialogSheet);
+        final Dialog mBottomSheetDialog = new Dialog(context, R.style.MaterialDialogSheet);
         mBottomSheetDialog.setContentView(view);
         mBottomSheetDialog.setCancelable(true);
         mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -152,7 +178,7 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftParen
             public void onClick(View v){
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboard.setText(dbHelper.getNumberFromName(shift.getShiftProvider()));
-                Toast.makeText(v.getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Copied to Clipboard", Toast.LENGTH_SHORT).show();
                 mBottomSheetDialog.dismiss();
             }
         });

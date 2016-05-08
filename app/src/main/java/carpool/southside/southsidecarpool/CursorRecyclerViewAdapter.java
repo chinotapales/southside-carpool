@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.support.v7.widget.RecyclerView;
 
-public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>{
     private Context mContext;
     private Cursor mCursor;
     private boolean mDataValid;
@@ -26,14 +26,14 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
     }
     @Override
     public int getItemCount(){
-        if (mDataValid && mCursor != null) {
+        if(mDataValid && mCursor != null){
             return mCursor.getCount();
         }
         return 0;
     }
     @Override
     public long getItemId(int position){
-        if (mDataValid && mCursor != null && mCursor.moveToPosition(position)){
+        if(mDataValid && mCursor != null && mCursor.moveToPosition(position)){
             return mCursor.getLong(mRowIdColumn);
         }
         return 0;
@@ -55,7 +55,7 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
     }
     public void changeCursor(Cursor cursor){
         Cursor old = swapCursor(cursor);
-        if (old != null) {
+        if(old != null){
             old.close();
         }
     }
@@ -80,7 +80,6 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
             mRowIdColumn = -1;
             mDataValid = false;
             notifyDataSetChanged();
-            //There is no notifyDataSetInvalidated() method in RecyclerView.Adapter
         }
         return oldCursor;
     }
@@ -96,7 +95,6 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
             super.onInvalidated();
             mDataValid = false;
             notifyDataSetChanged();
-            //There is no notifyDataSetInvalidated() method in RecyclerView.Adapter
         }
     }
 }
