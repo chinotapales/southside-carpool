@@ -59,6 +59,6 @@
         android:textSize="24sp"
         android:textColor="@color/colorAccent"
         android:fontFamily="sans-serif-light"
-        android:text="Favorited People Go Here."/>
+        android:text="Favorite People Go Here."/>
     </FrameLayout>
 </LinearLayout>
