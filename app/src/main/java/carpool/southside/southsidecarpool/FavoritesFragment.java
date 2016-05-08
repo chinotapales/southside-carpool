@@ -20,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
@@ -29,6 +31,7 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
     private DatabaseOpenHelper dbHelper;
     private SegmentedGroup segmentedFavorites;
     private SwipeRefreshLayout dSwipeRefreshLayout;
+    private TextView emptyView;
     private Paint p = new Paint();
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.favorite_view, container, false);
@@ -36,6 +39,7 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         segmentedFavorites.setOnCheckedChangeListener(this);
         dSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.favorite_swipe_refresh_layout);
         dSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        emptyView = (TextView) v.findViewById(R.id.empty_favorites_view);
         dbHelper = new DatabaseOpenHelper(v.getContext());
         rvFavorites = (RecyclerView) v.findViewById(R.id.favorite_recycler_view);
         personAdapter = new PersonCursorAdapter(v.getContext(), dbHelper.getAllPeopleByFavProviders(), 1);
@@ -48,6 +52,7 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         });
         rvFavorites.setLayoutManager(new LinearLayoutManager(v.getContext()));
         initSwipe();
+        checkEmpty();
         return v;
     }
     @Override
@@ -55,13 +60,25 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         switch(checkedId){
             case R.id.my_providers_button:
                 personAdapter.swapCursor(dbHelper.getAllPeopleByFavProviders());
+                checkEmpty();
                 previous = 0;
                 break;
             case R.id.my_riders_button:
                 personAdapter.swapCursor(dbHelper.getAllPeopleByFavRiders());
+                checkEmpty();
                 previous = 1;
                 break;
             default:
+        }
+    }
+    private void checkEmpty(){
+        if(personAdapter.getItemCount() > 0){
+            rvFavorites.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
+        else{
+            rvFavorites.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
         }
     }
     private void initSwipe(){
@@ -125,9 +142,11 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         switch(previous){
             case 0: cursor = dbHelper.getAllPeopleByFavProviders();
                     personAdapter.swapCursor(cursor);
+                    checkEmpty();
                     break;
             case 1: cursor = dbHelper.getAllPeopleByFavRiders();
                     personAdapter.swapCursor(cursor);
+                    checkEmpty();
                     break;
         }
         initSwipe();

@@ -37,6 +37,9 @@
                 style="@style/RadioButton"/>
         </info.hoang8f.android.segmented.SegmentedGroup>
     </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/favorite_swipe_refresh_layout"
         android:layout_width="match_parent"
@@ -47,4 +50,15 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"/>
     </android.support.v4.widget.SwipeRefreshLayout>
+    <TextView
+        android:id="@+id/empty_favorites_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="24sp"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="sans-serif-light"
+        android:text="Favorited People Go Here."/>
+    </FrameLayout>
 </LinearLayout>
