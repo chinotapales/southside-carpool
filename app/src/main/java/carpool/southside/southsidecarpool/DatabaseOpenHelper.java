@@ -66,6 +66,30 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         id = db.insert(Person.TABLE_NAME, null, contentValues);
 
         contentValues = new ContentValues();
+        contentValues.put(Person.COL_NAME, "Victor Buencamino");
+        contentValues.put(Person.COL_NUMBER, "09178696180");
+        contentValues.put(Person.COL_COLLEGE, "DLSU");
+        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
+        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
+        id = db.insert(Person.TABLE_NAME, null, contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(Person.COL_NAME, "Randolph Yu");
+        contentValues.put(Person.COL_NUMBER, "09178955038");
+        contentValues.put(Person.COL_COLLEGE, "DLSU");
+        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
+        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
+        id = db.insert(Person.TABLE_NAME, null, contentValues);
+
+        contentValues = new ContentValues();
+        contentValues.put(Person.COL_NAME, "Lucas Buencamino");
+        contentValues.put(Person.COL_NUMBER, "09178854515");
+        contentValues.put(Person.COL_COLLEGE, "CSB");
+        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
+        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
+        id = db.insert(Person.TABLE_NAME, null, contentValues);
+
+        contentValues = new ContentValues();
         contentValues.put(Shift.COL_DAY, "Monday");
         contentValues.put(Shift.COL_TYPE, "ToSchool");
         contentValues.put(Shift.COL_TIME, "7:30 AM");
