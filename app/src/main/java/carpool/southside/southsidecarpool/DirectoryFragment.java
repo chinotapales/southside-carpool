@@ -23,7 +23,7 @@ import android.widget.RadioGroup;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
-    private int previous = 0;
+    private int previous;
     private RecyclerView rvPeople;
     private PersonCursorAdapter personAdapter;
     private DatabaseOpenHelper dbHelper;
@@ -40,6 +40,7 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         rvPeople = (RecyclerView) v.findViewById(R.id.directory_recycler_view);
         personAdapter = new PersonCursorAdapter(v.getContext(), dbHelper.getAllPeople(), 0);
         rvPeople.setAdapter(personAdapter);
+        segmentedSchool.check(R.id.all_button);
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){

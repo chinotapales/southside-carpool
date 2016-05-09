@@ -25,7 +25,7 @@ import android.widget.TextView;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
-    private int previous = 0;
+    private int previous;
     private RecyclerView rvFavorites;
     private PersonCursorAdapter personAdapter;
     private DatabaseOpenHelper dbHelper;
@@ -44,6 +44,7 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         rvFavorites = (RecyclerView) v.findViewById(R.id.favorite_recycler_view);
         personAdapter = new PersonCursorAdapter(v.getContext(), dbHelper.getAllPeopleByFavProviders(), 1);
         rvFavorites.setAdapter(personAdapter);
+        segmentedFavorites.check(R.id.my_providers_button);
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){

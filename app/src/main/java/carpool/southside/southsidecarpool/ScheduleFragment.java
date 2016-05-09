@@ -33,8 +33,7 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
         dSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         rSchedule = (RecyclerView) v.findViewById(R.id.schedule_recycler_view);
         dbHelper = new DatabaseOpenHelper(v.getContext());
-        day = "Monday";
-        initData(day, type);
+        segmentedDays.check(R.id.monday_button);
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
