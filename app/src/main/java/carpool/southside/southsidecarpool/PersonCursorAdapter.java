@@ -140,9 +140,11 @@ public class PersonCursorAdapter extends CursorRecyclerViewAdapter<PersonCursorA
             public void onClick(View v){
                 if(!isFavorited){
                     dbHelper.updateFavoriteProvider(cursor.getInt(cursor.getColumnIndex(Person.COL_ID)), 1);
+                    Toast.makeText(v.getContext(), cursor.getString(cursor.getColumnIndex(Person.COL_NAME)) + " Added to My Providers", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     dbHelper.updateFavoriteProvider(cursor.getInt(cursor.getColumnIndex(Person.COL_ID)), 0);
+                    Toast.makeText(v.getContext(), cursor.getString(cursor.getColumnIndex(Person.COL_NAME)) + " Removed from My Providers", Toast.LENGTH_SHORT).show();
                 }
                 if(type == 1){
                     swapCursor(dbHelper.getAllPeopleByFavProviders());
@@ -155,9 +157,11 @@ public class PersonCursorAdapter extends CursorRecyclerViewAdapter<PersonCursorA
             public void onClick(View v){
                 if(!isRiderFavorited){
                     dbHelper.updateFavoriteRider(cursor.getInt(cursor.getColumnIndex(Person.COL_ID)), 1);
+                    Toast.makeText(v.getContext(), cursor.getString(cursor.getColumnIndex(Person.COL_NAME)) + " Added to My Riders", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     dbHelper.updateFavoriteRider(cursor.getInt(cursor.getColumnIndex(Person.COL_ID)), 0);
+                    Toast.makeText(v.getContext(), cursor.getString(cursor.getColumnIndex(Person.COL_NAME)) + " Removed from My Riders", Toast.LENGTH_SHORT).show();
                 }
                 if(type == 1){
                     swapCursor(dbHelper.getAllPeopleByFavRiders());

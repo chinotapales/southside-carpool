@@ -154,9 +154,11 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftExpan
             public void onClick(View v){
                 if(!isFavorited){
                     dbHelper.updateFavoriteProviderByName(shift.getShiftProvider(), 1);
+                    Toast.makeText(v.getContext(), shift.getShiftProvider() + " Added to My Providers", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     dbHelper.updateFavoriteProviderByName(shift.getShiftProvider(), 0);
+                    Toast.makeText(v.getContext(), shift.getShiftProvider() + " Removed from My Providers", Toast.LENGTH_SHORT).show();
                 }
                 mBottomSheetDialog.dismiss();
             }
@@ -166,9 +168,11 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftExpan
             public void onClick(View v){
                 if(!isRiderFavorited){
                     dbHelper.updateFavoriteRiderByName(shift.getShiftProvider(), 1);
+                    Toast.makeText(v.getContext(), shift.getShiftProvider() + " Added to My Riders", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     dbHelper.updateFavoriteRiderByName(shift.getShiftProvider(), 0);
+                    Toast.makeText(v.getContext(), shift.getShiftProvider() + " Removed from My Riders", Toast.LENGTH_SHORT).show();
                 }
                 mBottomSheetDialog.dismiss();
             }
