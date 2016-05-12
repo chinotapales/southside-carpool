@@ -2,11 +2,200 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-identity-8.4.0_3aea961e7fdddf297e9b6a4828a53f0e6f204683\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\1.3.9\40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf\jsr305-1.3.9.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\jsr305-1.3.9_d8a8d01b1e5aa29d2d6112e0059aac1df332ce60\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-jackson2\1.20.0\2408070b2abec043624d35b35e30450f1b663858\google-http-client-jackson2-1.20.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="2408070b2abec043624d35b35e30450f1b663858">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\google-http-client-jackson2-1.20.0_a0c60106045ec3ceb1e7c2a6b5607de3208abcb9\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\info.hoang8f\android-segmented\1.0.6\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="692a913dff3246e0cc5369c2508f5970ecfeca01">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\info.hoang8f-android-segmented-1.0.6_78e178fab90877e39466cddf8974e0fd6e1f12e0\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.3.0_eda98ebc25cf358da221e99f093bee5f25c9b1cb\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="434bc0dbe55091287642cfa58c4c461e2f670e3f">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_e05338045f6f46f5e2174319c215bb2118802727\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.2.1_4f4a438a1577b5e6cfc5c67138fc9e21cfc84f47\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="c89d4a0a5bca3f8a0b9eafdd62ee1907a1dee317">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_409e6d8c7e329f94e7cbb311299bb3139ff3d3cb\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.3.0_15f84524ca502482585db07b7833d17d932056d4\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.google.guava\guava-jdk5\13.0\381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7\guava-jdk5-13.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\guava-jdk5-13.0_492ff9b7de9e4dd044e09237754c29ff38207b0b\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-android\1.20.0\313dc99a7963523871495897ca11aa8472b3c6fd\google-http-client-android-1.20.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="313dc99a7963523871495897ca11aa8472b3c6fd">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\google-http-client-android-1.20.0_b268fe86df43c7d0685829cfce2a3ad3eaa1c2cb\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.google.apis\google-api-services-script\v1-rev1-1.20.0\ed87b373e6fa4e1924c33fc43cf80f392de4e900\google-api-services-script-v1-rev1-1.20.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ed87b373e6fa4e1924c33fc43cf80f392de4e900">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\google-api-services-script-v1-rev1-1.20.0_f493a0bf0ce2c7d0555c800e6f59de2b12df5718\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client-android\1.20.0\5673179575c32b69a474334255c3044adf18d40\google-api-client-android-1.20.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="05673179575c32b69a474334255c3044adf18d40">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\google-api-client-android-1.20.0_a9754415ecdd5ac9aa5ed4543303901d6f32ce4a\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.aurelhubert\ahbottomnavigation\1.1.8\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="f29021effc25996fe2b0539f020241f059230451">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.aurelhubert-ahbottomnavigation-1.1.8_47cd809749ed0c000cfc2bfee05d12e7510d91a7\classes.dex" />
+    </item>
+    <item
         jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.bignerdranch.android\expandablerecyclerview\1.0.3\jars\classes.jar"
         jumboMode="true"
         revision="23.0.3"
         sha1="f5eeb4583102dd6771ab71bc8f0c6965548dd3e0">
         <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.bignerdranch.android-expandablerecyclerview-1.0.3_4178f9c92da32ce87f15ee1d1ac1546767762a99\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\libs\internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.3.0_7a31e6393540604271119d0ef0e907e791619649\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.github.ivbaranov\materiallettericon\0.2.2\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="59db32d9126fba9f61ed68d8eebe3edfd89194a3">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.ivbaranov-materiallettericon-0.2.2_186ed9882a8d310f5eb905c8428fc0b1926e1117\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.3.0_a7f912fb920e4fce72d712728821bbe4fb90f357\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client\1.20.0\d3e66209ae9e749b2d6833761e7885f60f285564\google-api-client-1.20.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="d3e66209ae9e749b2d6833761e7885f60f285564">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\google-api-client-1.20.0_3fa84a2958526b50e523696b4d2c7982a3e75a68\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client\1.20.0\93d82db2bca534960253f43424b2ba9d7638b4d2\google-http-client-1.20.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="93d82db2bca534960253f43424b2ba9d7638b4d2">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\google-http-client-1.20.0_e3221c15a4d6fb4362959e55896dfc78a7996cd0\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.google.oauth-client\google-oauth-client\1.20.0\1d086ac5756475ddf451af2e2df6e288d18608ca\google-oauth-client-1.20.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1d086ac5756475ddf451af2e2df6e288d18608ca">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\google-oauth-client-1.20.0_956f8622bf01ed3ac369370e759323ec477270e2\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.3.0_d5541e1df2fc19eb8b41d1a96023e6a456319286\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-8.4.0_b426c365fa0989aefc044251439f10bf16a43004\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.4.0_199dc9807c9fd4612abe68c6394615f62fb2ae5f\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.1.3\f6c3aed1cdfa21b5c1737c915186ea93a95a58bd\jackson-core-2.1.3.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\jackson-core-2.1.3_f7fef6558f0d7728496dd8f250678471ee385d1a\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.2.1_b21fdc9c1b49bd610c83e711410c1c123e23fc6d\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.3.0_814d82a7df6e3ce37e5a9aa3f8cde27e798c6dba\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\exploded-aar\pub.devrel\easypermissions\0.1.5\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="2ffd97c466e0021572f3c7333839c71ecdf393ed">
+        <dex dex="C:\Users\Randolph\Documents\GitHub\southside-carpool\app\build\intermediates\transforms\dex\debug\folders\1000\10\pub.devrel-easypermissions-0.1.5_a9b7ccff97ec73178069ad703d461642b094d78e\classes.dex" />
     </item>
 
 </items>
