@@ -3,6 +3,7 @@ package carpool.southside.southsidecarpool;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -70,7 +71,9 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
     private static final String BUTTON_TEXT = "Call Google Apps Script Execution API";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { "https://www.googleapis.com/auth/drive" };
-
+    private static final String TAG = "LOGIN";
+    private List<String> directoryResult = null;
+    private DatabaseOpenHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,28 +82,41 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),MainActivity.class);
-                startActivity(intent);
+                getResultsFromApi();
             }
         });
+        mCredential = GoogleAccountCredential.usingOAuth2(
+                getApplicationContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
     }
 
-    /**
-     * Attempt to call the API, after verifying that all the preconditions are
-     * satisfied. The preconditions are: Google Play Services installed, an
-     * account was selected and the device currently has online access. If any
-     * of the preconditions are not satisfied, the app will prompt the user as
-     * appropriate.
-     */
+
     private void getResultsFromApi() {
         if (! isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else if (! isDeviceOnline()) {
-            mOutputText.setText("No network connection available.");
+           // mOutputText.setText("No network connection available.");
         } else {
-            new MakeRequestTask(mCredential).execute();
+            new MakeRequestTask(mCredential,"getDirectory").execute();
+            if(directoryResult != null){
+                dbHelper = new DatabaseOpenHelper(this);
+                dbHelper.deleteAllPeople();
+                String name, number, email, university, id;
+                for(int i=0; i<directoryResult.size(); i+=5){
+                    name = directoryResult.get(i);
+                    number = directoryResult.get(i+1);
+                    email = directoryResult.get(i+2);
+                    university = directoryResult.get(i+3);
+                    id = directoryResult.get(i+4);
+                    Person person = new Person(name,number,university,0,0);
+                    dbHelper.insertPerson(person);
+                    Log.i(TAG,"added new person "+name);
+                }
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+            }
         }
     }
 
@@ -111,11 +127,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    /**
-     * Check that Google Play services APK is installed and up to date.
-     * @return true if Google Play Services is available and up to
-     *     date on this device; false otherwise.
-     */
     private boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability apiAvailability =
                 GoogleApiAvailability.getInstance();
@@ -124,10 +135,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         return connectionStatusCode == ConnectionResult.SUCCESS;
     }
 
-    /**
-     * Attempt to resolve a missing, out-of-date, invalid or disabled Google
-     * Play Services installation via a user dialog, if possible.
-     */
     private void acquireGooglePlayServices() {
         GoogleApiAvailability apiAvailability =
                 GoogleApiAvailability.getInstance();
@@ -138,13 +145,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         }
     }
 
-
-    /**
-     * Display an error dialog showing that Google Play Services is missing
-     * or out of date.
-     * @param connectionStatusCode code describing the presence (or lack of)
-     *     Google Play Services on this device.
-     */
     void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
@@ -155,31 +155,26 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         dialog.show();
     }
 
-    /**
-     * An asynchronous task that handles the Google Apps Script Execution API call.
-     * Placing the API calls in their own task ensures the UI stays responsive.
-     */
     private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
         private com.google.api.services.script.Script mService = null;
         private Exception mLastError = null;
+        private String request = null;
 
-        public MakeRequestTask(GoogleAccountCredential credential) {
+        public MakeRequestTask(GoogleAccountCredential credential, String request) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.script.Script.Builder(
                     transport, jsonFactory, setHttpTimeout(credential))
                     .setApplicationName("Google Apps Script Execution API Android Quickstart")
                     .build();
+            this.request = request;
         }
 
-        /**
-         * Background task to call Google Apps Script Execution API.
-         * @param params no parameters needed for this task.
-         */
         @Override
         protected List<String> doInBackground(Void... params) {
             try {
-                return getDataFromApi();
+                Log.d(TAG, "doInBackground: Start request");
+                return getDataFromApi(request);
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
@@ -187,24 +182,15 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             }
         }
 
-        /**
-         * Call the API to run an Apps Script function that returns a list
-         * of folders within the user's root directory on Drive.
-         *
-         * @return list of String folder names and their IDs
-         * @throws IOException
-         */
-        private List<String> getDataFromApi()
+        private List<String> getDataFromApi(String functionName)
                 throws IOException, GoogleAuthException {
-            // ID of the script to call. Acquire this from the Apps Script editor,
-            // under Publish > Deploy as API executable.
             String scriptId = "MWYTqKofn3N68LjKzpsbljJx9Z3qmKtpf";
 
-            List<String> folderList = new ArrayList<String>();
+            List<String> resultList = new ArrayList<String>();
 
             // Create an execution request object.
             ExecutionRequest request = new ExecutionRequest()
-                    .setFunction("getFoldersUnderRoot");
+                    .setFunction(functionName);
 
             // Make the request.
             Operation op =
@@ -212,44 +198,28 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
 
             // Print results of request.
             if (op.getError() != null) {
+                Log.d(TAG, "Script Error!");
                 throw new IOException(getScriptError(op));
             }
             if (op.getResponse() != null &&
                     op.getResponse().get("result") != null) {
-                // The result provided by the API needs to be cast into
-                // the correct type, based upon what types the Apps Script
-                // function returns. Here, the function returns an Apps
-                // Script Object with String keys and values, so must be
-                // cast into a Java Map (folderSet).
-                Map<String, String> folderSet =
-                        (Map<String, String>)(op.getResponse().get("result"));
+                Log.d(TAG, "Script returned result!");
+                List<String> resultSet =
+                        (List<String>)(op.getResponse().get("result"));
 
-                for (String id: folderSet.keySet()) {
-                    folderList.add(
-                            String.format("%s (%s)", folderSet.get(id), id));
+                for (String temp: resultSet) {
+                    resultList.add(temp);
                 }
             }
 
-            return folderList;
+            return resultList;
         }
 
-        /**
-         * Interpret an error response returned by the API and return a String
-         * summary.
-         *
-         * @param op the Operation returning an error response
-         * @return summary of error response, or null if Operation returned no
-         *     error
-         */
         private String getScriptError(Operation op) {
             if (op.getError() == null) {
                 return null;
             }
 
-            // Extract the first (and only) set of error details and cast as a Map.
-            // The values of this map are the script's 'errorMessage' and
-            // 'errorType', and an array of stack trace elements (which also need to
-            // be cast as Maps).
             Map<String, Object> detail = op.getError().getDetails().get(0);
             List<Map<String, Object>> stacktrace =
                     (List<Map<String, Object>>)detail.get("scriptStackTraceElements");
@@ -276,24 +246,26 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
 
         @Override
         protected void onPreExecute() {
-            mOutputText.setText("");
-            mProgress.show();
+          //  mOutputText.setText("");
+          //  mProgress.show();
         }
 
         @Override
         protected void onPostExecute(List<String> output) {
-            mProgress.hide();
+            //mProgress.hide();
             if (output == null || output.size() == 0) {
-                mOutputText.setText("No results returned.");
+                Log.d(TAG, "onPostExecute: returned result is null");
+               // mOutputText.setText("No results returned.");
             } else {
                 output.add(0, "Data retrieved using the Google Apps Script Execution API:");
-                mOutputText.setText(TextUtils.join("\n", output));
+              //  mOutputText.setText(TextUtils.join("\n", output));
+                directoryResult = output;
             }
         }
 
         @Override
         protected void onCancelled() {
-            mProgress.hide();
+            //mProgress.hide();
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -304,11 +276,13 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
                             LoginActivity.REQUEST_AUTHORIZATION);
                 } else {
-                    mOutputText.setText("The following error occurred:\n"
-                            + mLastError.getMessage());
+                    Log.d(TAG, "The following error occoured: " + mLastError.getMessage());
+                   // mOutputText.setText("The following error occurred:\n"
+                            //+ mLastError.getMessage());
                 }
             } else {
-                mOutputText.setText("Request cancelled.");
+                Log.d(TAG, "onCancelled: request cancelled");
+              //  mOutputText.setText("Request cancelled.");
             }
         }
     }
@@ -369,9 +343,10 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         switch(requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    mOutputText.setText(
+                /*    mOutputText.setText(
                             "This app requires Google Play Services. Please install " +
                                     "Google Play Services on your device and relaunch this app.");
+                */
                 } else {
                     getResultsFromApi();
                 }

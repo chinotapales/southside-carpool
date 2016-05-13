@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity{
         bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
         bottomNavigation.setCurrentItem(0);
         //Pushing of dummy data
-        dbHelper = new DatabaseOpenHelper(this);
-        dbHelper.deleteAllData();
-        dbHelper.insertDummyData();
+       // dbHelper = new DatabaseOpenHelper(this);
+       // dbHelper.deleteAllData();
+       // dbHelper.insertDummyData();
         final ScheduleFragment schedule = new ScheduleFragment();
         final DirectoryFragment directory = new DirectoryFragment();
         final FavoritesFragment favorites = new FavoritesFragment();
