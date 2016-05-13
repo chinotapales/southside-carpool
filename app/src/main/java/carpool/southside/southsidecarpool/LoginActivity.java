@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else if (! isDeviceOnline()) {
-           // mOutputText.setText("No network connection available.");
+            Log.d(TAG, "getResultsFromApi: No network connection available");
         } else {
             new MakeRequestTask(mCredential,"getDirectory").execute();
             if(directoryResult != null){
@@ -246,26 +246,23 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
 
         @Override
         protected void onPreExecute() {
-          //  mOutputText.setText("");
-          //  mProgress.show();
+
         }
 
         @Override
         protected void onPostExecute(List<String> output) {
-            //mProgress.hide();
+
             if (output == null || output.size() == 0) {
                 Log.d(TAG, "onPostExecute: returned result is null");
-               // mOutputText.setText("No results returned.");
+
             } else {
                 output.add(0, "Data retrieved using the Google Apps Script Execution API:");
-              //  mOutputText.setText(TextUtils.join("\n", output));
                 directoryResult = output;
             }
         }
 
         @Override
         protected void onCancelled() {
-            //mProgress.hide();
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -277,12 +274,9 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                             LoginActivity.REQUEST_AUTHORIZATION);
                 } else {
                     Log.d(TAG, "The following error occoured: " + mLastError.getMessage());
-                   // mOutputText.setText("The following error occurred:\n"
-                            //+ mLastError.getMessage());
                 }
             } else {
                 Log.d(TAG, "onCancelled: request cancelled");
-              //  mOutputText.setText("Request cancelled.");
             }
         }
     }
@@ -294,9 +288,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             public void initialize(HttpRequest httpRequest)
                     throws java.io.IOException {
                 requestInitializer.initialize(httpRequest);
-                // This allows the API to call (and avoid timing out on)
-                // functions that take up to 6 minutes to complete (the maximum
-                // allowed script run time), plus a little overhead.
                 httpRequest.setReadTimeout(380000);
             }
         };
@@ -323,13 +314,11 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                 mCredential.setSelectedAccountName(accountName);
                 getResultsFromApi();
             } else {
-                // Start a dialog from which the user can choose an account
                 startActivityForResult(
                         mCredential.newChooseAccountIntent(),
                         REQUEST_ACCOUNT_PICKER);
             }
         } else {
-            // Request the GET_ACCOUNTS permission via a user dialog
             EasyPermissions.requestPermissions(
                     this,
                     "This app needs to access your Google account (via Contacts).",
@@ -343,10 +332,8 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         switch(requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                /*    mOutputText.setText(
-                            "This app requires Google Play Services. Please install " +
-                                    "Google Play Services on your device and relaunch this app.");
-                */
+                    Log.d(TAG, "Please Install Google Play Services ");
+
                 } else {
                     getResultsFromApi();
                 }
