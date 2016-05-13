@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
 
     private static final String BUTTON_TEXT = "Call Google Apps Script Execution API";
     private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { "https://www.googleapis.com/auth/drive" };
+    private static final String[] SCOPES = { "https://www.googleapis.com/auth/spreadsheets" };
     private static final String TAG = "LOGIN";
     private List<String> directoryResult = null;
     private DatabaseOpenHelper dbHelper;
@@ -191,11 +191,11 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             // Create an execution request object.
             ExecutionRequest request = new ExecutionRequest()
                     .setFunction(functionName);
-
+            Log.d(TAG, "Function set. Requesting for execution");
             // Make the request.
             Operation op =
                     mService.scripts().run(scriptId, request).execute();
-
+            Log.d(TAG, "Function Executed.");
             // Print results of request.
             if (op.getError() != null) {
                 Log.d(TAG, "Script Error!");
@@ -204,12 +204,9 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             if (op.getResponse() != null &&
                     op.getResponse().get("result") != null) {
                 Log.d(TAG, "Script returned result!");
-                List<String> resultSet =
-                        (List<String>)(op.getResponse().get("result"));
-
-                for (String temp: resultSet) {
-                    resultList.add(temp);
-                }
+                String resultSet =
+                        (String)(op.getResponse().get("result"));
+                Log.d(TAG, resultSet);
             }
 
             return resultList;
