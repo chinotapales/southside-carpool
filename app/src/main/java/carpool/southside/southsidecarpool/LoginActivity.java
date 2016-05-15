@@ -1,12 +1,23 @@
 package carpool.southside.southsidecarpool;
 
+import android.Manifest;
+import android.accounts.AccountManager;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -19,38 +30,14 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
-
-
-
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.api.services.script.model.*;
-import java.util.Map;
-
-import android.Manifest;
-import android.accounts.AccountManager;
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import com.google.api.services.script.model.ExecutionRequest;
+import com.google.api.services.script.model.Operation;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -100,24 +87,9 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             Log.d(TAG, "getResultsFromApi: No network connection available");
         } else {
             new MakeRequestTask(mCredential,"getDirectory").execute();
-            if(directoryResult != null){
-                dbHelper = new DatabaseOpenHelper(this);
-                dbHelper.deleteAllPeople();
-                String name, number, email, university, id;
-                for(int i=0; i<directoryResult.size(); i+=5){
-                    name = directoryResult.get(i);
-                    number = directoryResult.get(i+1);
-                    email = directoryResult.get(i+2);
-                    university = directoryResult.get(i+3);
-                    id = directoryResult.get(i+4);
-                    Person person = new Person(name,number,university,0,0);
-                    dbHelper.insertPerson(person);
-                    Log.i(TAG,"added new person "+name);
-                }
-                Intent intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-            }
         }
+
+
     }
 
     private boolean isDeviceOnline() {
@@ -174,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         protected List<String> doInBackground(Void... params) {
             try {
                 Log.d(TAG, "doInBackground: Start request");
-                return getDataFromApi(request);
+               return getDataFromApi(request);
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
@@ -184,7 +156,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
 
         private List<String> getDataFromApi(String functionName)
                 throws IOException, GoogleAuthException {
-            String scriptId = "MWYTqKofn3N68LjKzpsbljJx9Z3qmKtpf";
+            String scriptId = "M3yE-7S_AsYj-ksqekhc1iciusy43pzuj";
 
             List<String> resultList = new ArrayList<String>();
 
@@ -204,12 +176,12 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             if (op.getResponse() != null &&
                     op.getResponse().get("result") != null) {
                 Log.d(TAG, "Script returned result!");
-                String resultSet =
-                        (String)(op.getResponse().get("result"));
-                Log.d(TAG, resultSet);
+                resultList=
+                        (List<String>) (op.getResponse().get("result"));
+                Log.d(TAG, resultList.toString());
+                return resultList;
             }
-
-            return resultList;
+            return null;
         }
 
         private String getScriptError(Operation op) {
@@ -249,14 +221,16 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         @Override
         protected void onPostExecute(List<String> output) {
 
-            if (output == null || output.size() == 0) {
+            if (output == null) {
                 Log.d(TAG, "onPostExecute: returned result is null");
 
             } else {
-                output.add(0, "Data retrieved using the Google Apps Script Execution API:");
-                directoryResult = output;
+               // output.add(0, "Data retrieved using the Google Apps Script Execution API:");
+                Log.d(TAG,output.toString());
+                setDirectoryResult(output);
             }
         }
+
 
         @Override
         protected void onCancelled() {
@@ -356,6 +330,24 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                     getResultsFromApi();
                 }
                 break;
+        }
+    }
+
+    private void setDirectoryResult(List<String> directoryResult) {
+        if (directoryResult != null) {
+            dbHelper = new DatabaseOpenHelper(this);
+            dbHelper.deleteAllPeople();
+            String name, number, email, university, id;
+            for (int i = 0; i < directoryResult.size(); i += 3) {
+                name = directoryResult.get(i).toString();
+                number = directoryResult.get(i + 1).toString();
+                university = directoryResult.get(i + 2).toString();
+                Person person = new Person(name, number, university, 0, 0);
+                dbHelper.insertPerson(person);
+                Log.i(TAG, "added new person " + name);
+            }
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 }
