@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.common.ConnectionResult;
@@ -75,6 +76,14 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
+        if (!EasyPermissions.hasPermissions(
+                this, Manifest.permission.GET_ACCOUNTS)){
+            EasyPermissions.requestPermissions(
+                    this,
+                    "This app needs to access your Google account (via Contacts).",
+                    REQUEST_PERMISSION_GET_ACCOUNTS,
+                    Manifest.permission.GET_ACCOUNTS);
+        }
     }
 
 
@@ -84,9 +93,11 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else if (! isDeviceOnline()) {
+            Toast.makeText(LoginActivity.this, "No network connection available", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "getResultsFromApi: No network connection available");
         } else {
             new MakeRequestTask(mCredential,"getDirectory").execute();
+            new MakeRequestTask(mCredential,"getShifts").execute();
         }
 
 
@@ -156,9 +167,9 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
 
         private List<String> getDataFromApi(String functionName)
                 throws IOException, GoogleAuthException {
-            String scriptId = "M3yE-7S_AsYj-ksqekhc1iciusy43pzuj";
+            String scriptId = "MvQzBIvgJGSM9HZKAHcraIMiusy43pzuj";
 
-            List<String> resultList = new ArrayList<String>();
+            List<String> resultList;
 
             // Create an execution request object.
             ExecutionRequest request = new ExecutionRequest()
@@ -220,14 +231,21 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
 
         @Override
         protected void onPostExecute(List<String> output) {
-
+            Log.d(TAG, request);
             if (output == null) {
                 Log.d(TAG, "onPostExecute: returned result is null");
 
             } else {
                // output.add(0, "Data retrieved using the Google Apps Script Execution API:");
                 Log.d(TAG,output.toString());
-                setDirectoryResult(output);
+                if(request.contains("getDirectory")){
+                    setDirectory(output);
+                }
+                else if(request.contains("getShifts")){
+                    setShifts(output);
+                }
+
+
             }
         }
 
@@ -333,21 +351,40 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         }
     }
 
-    private void setDirectoryResult(List<String> directoryResult) {
+    private void setDirectory(List<String> directoryResult) {
         if (directoryResult != null) {
             dbHelper = new DatabaseOpenHelper(this);
             dbHelper.deleteAllPeople();
-            String name, number, email, university, id;
+            String name, number, university;
             for (int i = 0; i < directoryResult.size(); i += 3) {
-                name = directoryResult.get(i).toString();
-                number = directoryResult.get(i + 1).toString();
-                university = directoryResult.get(i + 2).toString();
-                Person person = new Person(name, number, university, 0, 0);
-                dbHelper.insertPerson(person);
+                name = directoryResult.get(i);
+                number = directoryResult.get(i + 1);
+                university = directoryResult.get(i + 2);
+                if(!name.equals("")) {
+                    Person person = new Person(name, number, university, 0, 0);
+                    dbHelper.insertPerson(person);
+                }
                 Log.i(TAG, "added new person " + name);
+            }
+        }
+    }
+    private void setShifts(List<String> shiftsResult) {
+        if (shiftsResult != null) {
+            dbHelper = new DatabaseOpenHelper(this);
+            dbHelper.deleteAllShifts();
+            String day, type, time, provider;
+            for (int i = 0; i < shiftsResult.size(); i += 4) {
+                day = shiftsResult.get(i);
+                type = shiftsResult.get(i + 1);
+                time = shiftsResult.get(i + 2);
+                provider = shiftsResult.get(i + 3);
+                Shift shift = new Shift(day, type, time, provider);
+                dbHelper.insertShift(shift);
+                Log.i(TAG, "added new shift by " + provider);
             }
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
     }
 }
+
