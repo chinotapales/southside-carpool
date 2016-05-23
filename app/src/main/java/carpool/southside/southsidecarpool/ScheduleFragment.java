@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
     private DatabaseOpenHelper dbHelper;
     private ArrayList<Object> shifts;
     private ArrayList<ParentObject> times;
+    private static final String TAG = "ScheduleFragment";
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.schedule_view, container, false);
         type = getArguments().getString("trip_id");
@@ -106,7 +108,9 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
         }
         shifts = dbHelper.getArrayListShifts(day, type);
         times = dbHelper.getAssignedTimesByDayAndType(day, type);
+        Log.d(TAG, String.valueOf(times.size()));
         for(int i = 0; i < times.size(); i++){
+            Log.d(TAG, times.get(i).toString());
             AssignedTime a = (AssignedTime) times.get(i);
             for(int j = 0; j < shifts.size(); j++){
                 Shift s = (Shift) shifts.get(j);

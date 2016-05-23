@@ -84,6 +84,17 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                     REQUEST_PERMISSION_GET_ACCOUNTS,
                     Manifest.permission.GET_ACCOUNTS);
         }
+        if (EasyPermissions.hasPermissions(
+                this, Manifest.permission.GET_ACCOUNTS)) {
+            String accountName = getPreferences(Context.MODE_PRIVATE)
+                    .getString(PREF_ACCOUNT_NAME, null);
+            if (accountName != null) {
+                mCredential.setSelectedAccountName(accountName);
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+
+            }
+        }
     }
 
 
@@ -358,7 +369,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             String name, number, university;
             for (int i = 0; i < directoryResult.size(); i += 3) {
                 name = directoryResult.get(i);
-                number = directoryResult.get(i + 1);
+                number = directoryResult.get(i + 1).toString();
                 university = directoryResult.get(i + 2);
                 if(!name.equals("")) {
                     Person person = new Person(name, number, university, 0, 0);
