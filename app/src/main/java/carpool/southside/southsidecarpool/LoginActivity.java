@@ -15,11 +15,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.SignInButton;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
@@ -41,7 +41,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class LoginActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
-    private Button loginButton;
+    private SignInButton loginButton;
     GoogleAccountCredential mCredential;
     private final int REQUEST_PERMISSION_CODE = 5678;
     static final int REQUEST_ACCOUNT_PICKER = 1000;
@@ -56,13 +56,14 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginButton = (Button)findViewById(R.id.login);
+        loginButton = (SignInButton) findViewById(R.id.sign_in_button);
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 getResultsFromApi();
             }
         });
+        loginButton.setStyle(SignInButton.SIZE_WIDE, SignInButton.COLOR_LIGHT);
         requestPermissions();
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
