@@ -280,6 +280,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                         mCredential = GoogleAccountCredential.usingOAuth2(
                                 getApplicationContext(), Arrays.asList(SCOPES))
                                 .setBackOff(new ExponentialBackOff());
+                        Toast.makeText(LoginActivity.this,"Refreshing Token Try Again.", Toast.LENGTH_SHORT).show();
 
                     } catch (IOException e) {
                         Log.w(TAG, e.getMessage());
