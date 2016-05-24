@@ -66,15 +66,6 @@ public class PersonCursorAdapter extends CursorRecyclerViewAdapter<PersonCursorA
                 openBottomSheet(v, c, position);
             }
         });
-        holder.personContainer.setOnLongClickListener(new View.OnLongClickListener(){
-            @Override
-            public boolean onLongClick(View v){
-                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboard.setText(getCursor().getString(getCursor().getColumnIndex(Person.COL_NUMBER)));
-                Toast.makeText(context, "Copied to Clipboard", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
     }
     public String getIntentNumber(int position){
         c.moveToPosition(position);

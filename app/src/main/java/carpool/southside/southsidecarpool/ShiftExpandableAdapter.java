@@ -88,15 +88,6 @@ public class ShiftExpandableAdapter extends ExpandableRecyclerAdapter<ShiftExpan
                 openBottomSheet(v, shift);
             }
         });
-        shiftChildViewHolder.shiftContainer.setOnLongClickListener(new View.OnLongClickListener(){
-            @Override
-            public boolean onLongClick(View v){
-                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboard.setText(dbHelper.getNumberFromName(shift.getShiftProvider()));
-                Toast.makeText(context, "Copied to Clipboard", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
     }
     public void openBottomSheet(View v, Shift s){
         final Shift shift = s;

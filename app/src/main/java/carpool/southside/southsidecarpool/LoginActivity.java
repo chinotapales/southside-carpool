@@ -216,16 +216,18 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                 }
                 else{
                     Log.d(TAG, "The following error occoured: " + mLastError.getMessage());
-                    try {
+                    try{
                         mCredential.getGoogleAccountManager().invalidateAuthToken(mCredential.getToken());
                         mCredential = GoogleAccountCredential.usingOAuth2(
                                 getApplicationContext(), Arrays.asList(SCOPES))
                                 .setBackOff(new ExponentialBackOff());
                         Toast.makeText(LoginActivity.this,"Refreshing Token Try Again.", Toast.LENGTH_SHORT).show();
 
-                    } catch (IOException e) {
+                    }
+                    catch(IOException e){
                         Log.w(TAG, e.getMessage());
-                    } catch (GoogleAuthException e) {
+                    }
+                    catch(GoogleAuthException e){
                         Log.w(TAG, e.getMessage());
                     }
                 }
