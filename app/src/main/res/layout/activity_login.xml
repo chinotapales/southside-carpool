@@ -20,8 +20,24 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/enter_layout_passcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true">
+            <EditText
+                android:id="@+id/enter_passcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:inputType="numberPassword"
+                android:maxLength="6"
+                android:hint="Passcode"
+                android:gravity="center"/>
+        </android.support.design.widget.TextInputLayout>
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>

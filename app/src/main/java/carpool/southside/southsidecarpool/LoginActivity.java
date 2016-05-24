@@ -7,14 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.common.ConnectionResult;
@@ -42,6 +45,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class LoginActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
     private SignInButton loginButton;
+    private EditText passcode;
+    private TextInputLayout inputLayoutPasscode;
     GoogleAccountCredential mCredential;
     private final int REQUEST_PERMISSION_CODE = 5678;
     static final int REQUEST_ACCOUNT_PICKER = 1000;
@@ -60,14 +65,16 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                //TODO Validate One Time Passcode
                 getResultsFromApi();
             }
         });
         loginButton.setStyle(SignInButton.SIZE_WIDE, SignInButton.COLOR_LIGHT);
+        passcode = (EditText) findViewById(R.id.enter_passcode);
+        passcode.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+        inputLayoutPasscode = (TextInputLayout) findViewById(R.id.enter_layout_passcode);
         requestPermissions();
-        mCredential = GoogleAccountCredential.usingOAuth2(
-                getApplicationContext(), Arrays.asList(SCOPES))
-                .setBackOff(new ExponentialBackOff());
+        mCredential = GoogleAccountCredential.usingOAuth2(getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
         if(EasyPermissions.hasPermissions(this, Manifest.permission.GET_ACCOUNTS)){
             String accountName = getPreferences(Context.MODE_PRIVATE).getString(PREF_ACCOUNT_NAME, null);
             if(accountName != null){
