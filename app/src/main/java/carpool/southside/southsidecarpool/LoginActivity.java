@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
+
         if (!EasyPermissions.hasPermissions(
                 this, Manifest.permission.GET_ACCOUNTS)){
             EasyPermissions.requestPermissions(
@@ -274,6 +275,17 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                             LoginActivity.REQUEST_AUTHORIZATION);
                 } else {
                     Log.d(TAG, "The following error occoured: " + mLastError.getMessage());
+                    try {
+                        mCredential.getGoogleAccountManager().invalidateAuthToken(mCredential.getToken());
+                        mCredential = GoogleAccountCredential.usingOAuth2(
+                                getApplicationContext(), Arrays.asList(SCOPES))
+                                .setBackOff(new ExponentialBackOff());
+
+                    } catch (IOException e) {
+                        Log.w(TAG, e.getMessage());
+                    } catch (GoogleAuthException e) {
+                        Log.w(TAG, e.getMessage());
+                    }
                 }
             } else {
                 Log.d(TAG, "onCancelled: request cancelled");
