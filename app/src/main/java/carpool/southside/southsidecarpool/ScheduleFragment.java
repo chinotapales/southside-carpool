@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,9 +107,7 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
         }
         shifts = dbHelper.getArrayListShifts(day, type);
         times = dbHelper.getAssignedTimesByDayAndType(day, type);
-        Log.d(TAG, String.valueOf(times.size()));
         for(int i = 0; i < times.size(); i++){
-            Log.d(TAG, times.get(i).toString());
             AssignedTime a = (AssignedTime) times.get(i);
             for(int j = 0; j < shifts.size(); j++){
                 Shift s = (Shift) shifts.get(j);

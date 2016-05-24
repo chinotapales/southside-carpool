@@ -6,7 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper{
     public static final String SCHEMA = "southside";
@@ -383,27 +391,41 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 null, null, Person.COL_NAME + " ASC");
         return cursor;
     }
-    public ArrayList<ParentObject> getAssignedTimesByDayAndType(String day, String type){
-        String previous= "";
+    public ArrayList<ParentObject> getAssignedTimesByDayAndType(final String day, String type){
         ArrayList<ParentObject> times = new ArrayList<>();
+        ArrayList<String> aTimes = new ArrayList<>();
+        Set<String> aTimesSet = new HashSet<>();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(Shift.TABLE_NAME,
                 null,
                 Shift.COL_DAY + " =? AND " + Shift.COL_TYPE + " =? ",
                 new String[]{day, type},
                 null, null, null);
-        if(cursor != null) {
+        if(cursor != null){
             while(cursor.moveToNext()){
-                if(previous.equals(cursor.getString(cursor.getColumnIndex(Shift.COL_TIME)))){
-                }
-                else{
-                    AssignedTime a = new AssignedTime();
-                    a.setShiftTime(cursor.getString(cursor.getColumnIndex(Shift.COL_TIME)));
-                    times.add(a);
-                }
-                previous = cursor.getString(cursor.getColumnIndex(Shift.COL_TIME));
+                aTimes.add(cursor.getString(cursor.getColumnIndex(Shift.COL_TIME)));
             }
             cursor.close();
+        }
+        aTimesSet.addAll(aTimes);
+        aTimes.clear();
+        aTimes.addAll(aTimesSet);
+        Collections.sort(aTimes, new Comparator<String>(){
+            DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+            @Override
+            public int compare(String one, String two) {
+                try{
+                    return dateFormat.parse(one).compareTo(dateFormat.parse(two));
+                }
+                catch (ParseException e){
+                    throw new IllegalArgumentException(e);
+                }
+            }
+        });
+        for(int i = 0; i < aTimes.size(); i++){
+            AssignedTime a = new AssignedTime();
+            a.setShiftTime(aTimes.get(i));
+            times.add(a);
         }
         return times;
     }
