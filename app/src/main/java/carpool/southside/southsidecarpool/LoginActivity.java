@@ -68,13 +68,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
-        if(!EasyPermissions.hasPermissions(this, Manifest.permission.GET_ACCOUNTS)){
-            EasyPermissions.requestPermissions(
-                    this,
-                    "This app needs to access your Google account (via Contacts).",
-                    REQUEST_PERMISSION_GET_ACCOUNTS,
-                    Manifest.permission.GET_ACCOUNTS);
-        }
         if(EasyPermissions.hasPermissions(this, Manifest.permission.GET_ACCOUNTS)){
             String accountName = getPreferences(Context.MODE_PRIVATE).getString(PREF_ACCOUNT_NAME, null);
             if(accountName != null){
@@ -255,8 +248,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
     @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
     private void chooseAccount(){
         if(EasyPermissions.hasPermissions(this, Manifest.permission.GET_ACCOUNTS)){
-            String accountName = getPreferences(Context.MODE_PRIVATE)
-                    .getString(PREF_ACCOUNT_NAME, null);
+            String accountName = getPreferences(Context.MODE_PRIVATE).getString(PREF_ACCOUNT_NAME, null);
             if(accountName != null){
                 mCredential.setSelectedAccountName(accountName);
                 getResultsFromApi();
