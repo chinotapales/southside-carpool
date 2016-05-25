@@ -61,18 +61,21 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        dbHelper = new DatabaseOpenHelper(this);
+        dbHelper.initPasscode();
+        passcode = (EditText) findViewById(R.id.enter_passcode);
+        passcode.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+        inputLayoutPasscode = (TextInputLayout) findViewById(R.id.enter_layout_passcode);
         loginButton = (SignInButton) findViewById(R.id.sign_in_button);
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO Validate One Time Passcode
-                getResultsFromApi();
+                if(submitForm()){
+                    getResultsFromApi();
+                }
             }
         });
         loginButton.setStyle(SignInButton.SIZE_WIDE, SignInButton.COLOR_LIGHT);
-        passcode = (EditText) findViewById(R.id.enter_passcode);
-        passcode.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
-        inputLayoutPasscode = (TextInputLayout) findViewById(R.id.enter_layout_passcode);
         requestPermissions();
         mCredential = GoogleAccountCredential.usingOAuth2(getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
         if(EasyPermissions.hasPermissions(this, Manifest.permission.GET_ACCOUNTS)){
@@ -82,6 +85,25 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }
+        }
+    }
+    private boolean submitForm(){
+        if(passcode.getText().toString().trim().isEmpty()){
+            inputLayoutPasscode.setError("Enter a Passcode");
+            return false;
+        }
+        else if(passcode.getText().length() != 6){
+            inputLayoutPasscode.setError("Passcode Must be 6 Digits Only");
+            return false;
+        }
+        String code = passcode.getText().toString().trim();
+        boolean success = dbHelper.isPasscodeCorrect(code);
+        if(!success){
+            inputLayoutPasscode.setError("Incorrect Passcode");
+            return false;
+        }
+        else{
+            return true;
         }
     }
     private void getResultsFromApi(){

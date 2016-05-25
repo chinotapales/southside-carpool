@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,12 +17,19 @@ import java.util.Set;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper{
     public static final String SCHEMA = "southside";
+    public static final String PASSCODE_TABLE = "Passcode";
+    public static final String PASSCODE_ID = "passID";
+    public static final String PASSCODE = "code";
     public DatabaseOpenHelper(Context context){
         super(context, SCHEMA, null, 1);
     }
     @Override
     public void onCreate(SQLiteDatabase db){
-        String sql = "CREATE TABLE " + Person.TABLE_NAME + " ("
+        String sql = "CREATE TABLE " + PASSCODE_TABLE + " ("
+                + PASSCODE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PASSCODE + " TEXT);";
+        db.execSQL(sql);
+        sql = "CREATE TABLE " + Person.TABLE_NAME + " ("
                 + Person.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + Person.COL_NAME + " TEXT, "
                 + Person.COL_NUMBER + " TEXT, "
@@ -47,106 +53,27 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         db.execSQL(sql);
         onCreate(db);
     }
-    public void insertDummyData(){
-        SQLiteDatabase db =  getWritableDatabase();
+    public void initPasscode(){
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Person.COL_NAME, "Chino Tapales");
-        contentValues.put(Person.COL_NUMBER, "09175524466");
-        contentValues.put(Person.COL_COLLEGE, "DLSU");
-        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
-        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
-        long id = db.insert(Person.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Person.COL_NAME, "Erika Mison");
-        contentValues.put(Person.COL_NUMBER, "09177945907");
-        contentValues.put(Person.COL_COLLEGE, "CSB");
-        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
-        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
-        id = db.insert(Person.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Person.COL_NAME, "Briana Buencamino");
-        contentValues.put(Person.COL_NUMBER, "09175055520");
-        contentValues.put(Person.COL_COLLEGE, "CSB");
-        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
-        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
-        id = db.insert(Person.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Person.COL_NAME, "Victor Buencamino");
-        contentValues.put(Person.COL_NUMBER, "09178696180");
-        contentValues.put(Person.COL_COLLEGE, "DLSU");
-        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
-        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
-        id = db.insert(Person.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Person.COL_NAME, "Randolph Yu");
-        contentValues.put(Person.COL_NUMBER, "09178955038");
-        contentValues.put(Person.COL_COLLEGE, "DLSU");
-        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
-        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
-        id = db.insert(Person.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Person.COL_NAME, "Lucas Buencamino");
-        contentValues.put(Person.COL_NUMBER, "09178854515");
-        contentValues.put(Person.COL_COLLEGE, "CSB");
-        contentValues.put(Person.COL_PROVIDER_FAVORITED, 0);
-        contentValues.put(Person.COL_RIDER_FAVORITED, 0);
-        id = db.insert(Person.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Shift.COL_DAY, "Monday");
-        contentValues.put(Shift.COL_TYPE, "ToSchool");
-        contentValues.put(Shift.COL_TIME, "7:30 AM");
-        contentValues.put(Shift.COL_PROVIDER, "Chino Tapales");
-        id = db.insert(Shift.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Shift.COL_DAY, "Monday");
-        contentValues.put(Shift.COL_TYPE, "BackHome");
-        contentValues.put(Shift.COL_TIME, "9:40 AM");
-        contentValues.put(Shift.COL_PROVIDER, "Briana Buencamino");
-        id = db.insert(Shift.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Shift.COL_DAY, "Monday");
-        contentValues.put(Shift.COL_TYPE, "BackHome");
-        contentValues.put(Shift.COL_TIME, "9:40 AM");
-        contentValues.put(Shift.COL_PROVIDER, "Erika Mison");
-        id = db.insert(Shift.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Shift.COL_DAY, "Wednesday");
-        contentValues.put(Shift.COL_TYPE, "BackHome");
-        contentValues.put(Shift.COL_TIME, "11:20 AM");
-        contentValues.put(Shift.COL_PROVIDER, "Victor Buencamino");
-        id = db.insert(Shift.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Shift.COL_DAY, "Wednesday");
-        contentValues.put(Shift.COL_TYPE, "BackHome");
-        contentValues.put(Shift.COL_TIME, "11:20 AM");
-        contentValues.put(Shift.COL_PROVIDER, "Lucas Buencamino");
-        id = db.insert(Shift.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Shift.COL_DAY, "Wednesday");
-        contentValues.put(Shift.COL_TYPE, "BackHome");
-        contentValues.put(Shift.COL_TIME, "11:20 AM");
-        contentValues.put(Shift.COL_PROVIDER, "Randolph Yu");
-        id = db.insert(Shift.TABLE_NAME, null, contentValues);
-
-        contentValues = new ContentValues();
-        contentValues.put(Shift.COL_DAY, "Monday");
-        contentValues.put(Shift.COL_TYPE, "BackHome");
-        contentValues.put(Shift.COL_TIME, "1:00 PM");
-        contentValues.put(Shift.COL_PROVIDER, "Chino Tapales");
-        id = db.insert(Shift.TABLE_NAME, null, contentValues);
-
+        contentValues.put(PASSCODE, "124578");
+        long id = db.insert(PASSCODE_TABLE, null, contentValues);
         db.close();
+    }
+    public boolean isPasscodeCorrect(String passCode){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(PASSCODE_TABLE,
+                null,
+                PASSCODE + " =? ",
+                new String[]{String.valueOf(passCode)},
+                null, null, null);
+        if(cursor.moveToFirst()){
+             if(cursor.getString(cursor.getColumnIndex(PASSCODE)).equals(passCode)){
+                 return true;
+             }
+        }
+        cursor.close();
+        return false;
     }
     public void deleteAllPeople(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -403,7 +330,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 null, null, null);
         if(cursor != null){
             while(cursor.moveToNext()){
-                aTimes.add(cursor.getString(cursor.getColumnIndex(Shift.COL_TIME)));
+                if(!cursor.getString(cursor.getColumnIndex(Shift.COL_TIME)).equals("")){
+                    aTimes.add(cursor.getString(cursor.getColumnIndex(Shift.COL_TIME)));
+                }
             }
             cursor.close();
         }
