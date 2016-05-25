@@ -346,7 +346,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 try{
                     return dateFormat.parse(one).compareTo(dateFormat.parse(two));
                 }
-                catch (ParseException e){
+                catch(ParseException e){
                     throw new IllegalArgumentException(e);
                 }
             }
