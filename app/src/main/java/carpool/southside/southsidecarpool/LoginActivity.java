@@ -308,10 +308,10 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                 name = directoryResult.get(i);
                 number = directoryResult.get(i + 1).toString();
                 university = directoryResult.get(i + 2);
-                if(!name.equals("")){
-                    Person person = new Person(name, number, university, 0, 0);
-                    dbHelper.insertPerson(person);
-                }
+
+                Person person = new Person(name, number, university, 0, 0);
+                dbHelper.insertPerson(person);
+
                 Log.i(TAG, "Added new person " + name);
             }
         }
