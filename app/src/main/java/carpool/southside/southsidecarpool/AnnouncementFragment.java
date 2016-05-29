@@ -29,7 +29,7 @@ public class AnnouncementFragment extends Fragment{
         announcements.add(new Announcement(0, "Chino Tapales", "May 19, 2016", "If you are 115 and have been in carpool for TWO TERMS, you are considered an OLD carpooler and only have to provide ONCE a week :) If you wish to provide twice a week, feel free to :) Any extra shifts will greatly be appreciated! Again deadline for sign up is TOMORROW @11:59PM. Thank you!"));
         announcements.add(new Announcement(1, "Ed Pertierra", "May 22, 2016", "The carpool schedule will be uploaded here later at 6PM. Please take note.\nThank you!"));
         announcements.add(new Announcement(2, "Chino Tapales", "May 22, 2016", "Good evening everyone! As of now, there are missing shifts but don't worry! There are still people that haven't signed up yet and are still adjusting. We will also be contacting some providers to change their shifts to balance the schedule in the coming days. Carpool officially begins tomorrow. Good luck finding rides :)"));
-        announcementAdapter = new AnnouncementAdapter(announcements);
+        announcementAdapter = new AnnouncementAdapter(getContext(), announcements);
         rvAnnouncements.setAdapter(announcementAdapter);
         aSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
@@ -59,7 +59,7 @@ public class AnnouncementFragment extends Fragment{
         announcements.add(new Announcement(0, "Chino Tapales", "May 19, 2016", "If you are 115 and have been in carpool for TWO TERMS, you are considered an OLD carpooler and only have to provide ONCE a week :) If you wish to provide twice a week, feel free to :) Any extra shifts will greatly be appreciated! Again deadline for sign up is TOMORROW @11:59PM. Thank you!"));
         announcements.add(new Announcement(1, "Ed Pertierra", "May 22, 2016", "The carpool schedule will be uploaded here later at 6PM. Please take note.\nThank you!"));
         announcements.add(new Announcement(2, "Chino Tapales", "May 22, 2016", "Good evening everyone! As of now, there are missing shifts but don't worry! There are still people that haven't signed up yet and are still adjusting. We will also be contacting some providers to change their shifts to balance the schedule in the coming days. Carpool officially begins tomorrow. Good luck finding rides :)"));
-        announcementAdapter = new AnnouncementAdapter(announcements);
+        announcementAdapter = new AnnouncementAdapter(getContext(), announcements);
         rvAnnouncements.setAdapter(announcementAdapter);
         checkEmpty();
     }
