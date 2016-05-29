@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity{
         getSupportActionBar().hide();
         ahBottomNavigationItems.add(new AHBottomNavigationItem("People", R.drawable.directory));
         ahBottomNavigationItems.add(new AHBottomNavigationItem("Favorites", R.drawable.favorites));
+        ahBottomNavigationItems.add(new AHBottomNavigationItem("Announcements", R.drawable.announcements));
         ahBottomNavigationItems.add(new AHBottomNavigationItem("To School", R.drawable.school_bound));
         ahBottomNavigationItems.add(new AHBottomNavigationItem("Back Home", R.drawable.home_bound));
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
@@ -29,13 +30,14 @@ public class MainActivity extends AppCompatActivity{
         bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FFFFFF"));
         bottomNavigation.setAccentColor(Color.parseColor("#4CAF50"));
         bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
-        bottomNavigation.setCurrentItem(0);
+        bottomNavigation.setCurrentItem(2);
         final ScheduleFragment schedule = new ScheduleFragment();
         final DirectoryFragment directory = new DirectoryFragment();
         final FavoritesFragment favorites = new FavoritesFragment();
+        final AnnouncementFragment announcements = new AnnouncementFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.current_frame, directory, directory.getClass().getName())
+                .replace(R.id.current_frame, announcements, announcements.getClass().getName())
                 .commit();
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener(){
             @Override
@@ -55,7 +57,14 @@ public class MainActivity extends AppCompatActivity{
                     previousPosition = 1;
                 }
                 else if(position == 2){
-                    if(previousPosition == 3 || previousPosition == 2){
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.current_frame, announcements, announcements.getClass().getName())
+                            .commit();
+                    previousPosition = 2;
+                }
+                else if(position == 3){
+                    if(previousPosition == 4 || previousPosition == 3){
                         schedule.setType("ToSchool");
                     }
                     else{
@@ -67,10 +76,10 @@ public class MainActivity extends AppCompatActivity{
                                 .replace(R.id.current_frame, schedule, schedule.getClass().getName())
                                 .commit();
                     }
-                    previousPosition = 2;
+                    previousPosition = 3;
                 }
-                else if(position == 3){
-                    if(previousPosition == 2|| previousPosition == 3){
+                else if(position == 4){
+                    if(previousPosition == 3|| previousPosition == 4){
                         schedule.setType("BackHome");
                     }
                     else{
@@ -82,7 +91,7 @@ public class MainActivity extends AppCompatActivity{
                                 .replace(R.id.current_frame, schedule, schedule.getClass().getName())
                                 .commit();
                     }
-                    previousPosition = 3;
+                    previousPosition = 4;
                 }
             }
         });
