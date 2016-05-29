@@ -13,9 +13,9 @@
         android:layout_height="wrap_content">
         <com.github.ivbaranov.mli.MaterialLetterIcon
             android:id="@+id/announcement_image"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="14dp"/>
         <TextView
             android:id="@+id/announcement_name"
             android:layout_width="wrap_content"
