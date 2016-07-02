@@ -1,18 +1,35 @@
 package carpool.southside.southsidecarpool;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.util.ExponentialBackOff;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity{
     private int previousPosition = 0;
     private Toolbar toolbar;
     private AHBottomNavigation bottomNavigation;
     private ArrayList<AHBottomNavigationItem> ahBottomNavigationItems = new ArrayList<>();
+    private static final String TAG = "MAIN";
+    private static final String[] SCOPES = { "https://www.googleapis.com/auth/spreadsheets" };
+    private static final String PREF_ACCOUNT_NAME = "accountName";
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -31,6 +48,7 @@ public class MainActivity extends AppCompatActivity{
         bottomNavigation.setAccentColor(Color.parseColor("#4CAF50"));
         bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
         bottomNavigation.setCurrentItem(2);
+
         final ScheduleFragment schedule = new ScheduleFragment();
         final DirectoryFragment directory = new DirectoryFragment();
         final FavoritesFragment favorites = new FavoritesFragment();
@@ -95,5 +113,29 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+
     }
+
+    public void updateData(Activity activity){
+        SharedPreferences settings = getSharedPreferences("Settings",0);
+        String accountName = settings.getString(PREF_ACCOUNT_NAME, null);
+        GoogleAccountCredential mCredential = GoogleAccountCredential.usingOAuth2(getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
+        mCredential.setSelectedAccountName(accountName);
+        if(!isDeviceOnline(activity)){
+            Toast.makeText(activity, "No network connection available", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getResultsFromApi: No network connection available");
+        }
+        else{
+            new MakeRequestTask(mCredential,"getDirectory",this).execute();
+            new MakeRequestTask(mCredential,"getAnnouncements",this).execute();
+            new MakeRequestTask(mCredential,"getShifts",this).execute();
+        }
+
+    }
+    private boolean isDeviceOnline(Activity activity){
+        ConnectivityManager connMgr = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
 }

@@ -10,36 +10,28 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.google.android.gms.auth.GoogleAuthException;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.SignInButton;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
-import com.google.api.services.script.model.ExecutionRequest;
-import com.google.api.services.script.model.Operation;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -47,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
     private SignInButton loginButton;
     private EditText passcode;
     private TextInputLayout inputLayoutPasscode;
-    GoogleAccountCredential mCredential;
+    private GoogleAccountCredential mCredential;
     private final int REQUEST_PERMISSION_CODE = 5678;
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -79,10 +71,13 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         requestPermissions();
         mCredential = GoogleAccountCredential.usingOAuth2(getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
         if(EasyPermissions.hasPermissions(this, Manifest.permission.GET_ACCOUNTS)){
-            String accountName = getPreferences(Context.MODE_PRIVATE).getString(PREF_ACCOUNT_NAME, null);
+            Log.d(TAG, PREF_ACCOUNT_NAME);
+            SharedPreferences settings = getSharedPreferences("Settings",0);
+            String accountName = settings.getString(PREF_ACCOUNT_NAME, null);
             if(accountName != null){
                 mCredential.setSelectedAccountName(accountName);
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("accountName",accountName);
                 startActivity(intent);
             }
         }
@@ -118,8 +113,10 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             Log.d(TAG, "getResultsFromApi: No network connection available");
         }
         else{
-            new MakeRequestTask(mCredential,"getDirectory").execute();
-            new MakeRequestTask(mCredential,"getShifts").execute();
+            new MakeRequestTask(mCredential,"getDirectory",this).execute();
+            new MakeRequestTask(mCredential,"getAnnouncements",this).execute();
+            new MakeRequestTask(mCredential,"getShifts",this).execute();
+
         }
     }
     private boolean isDeviceOnline(){
@@ -144,121 +141,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         Dialog dialog = apiAvailability.getErrorDialog(LoginActivity.this, connectionStatusCode, REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
     }
-    private class MakeRequestTask extends AsyncTask<Void, Void, List<String>>{
-        private com.google.api.services.script.Script mService = null;
-        private Exception mLastError = null;
-        private String request = null;
-        public MakeRequestTask(GoogleAccountCredential credential, String request){
-            HttpTransport transport = AndroidHttp.newCompatibleTransport();
-            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-            mService = new com.google.api.services.script.Script.Builder(transport, jsonFactory, setHttpTimeout(credential))
-                    .setApplicationName("Google Apps Script Execution API Android Quickstart")
-                    .build();
-            this.request = request;
-        }
-        @Override
-        protected List<String> doInBackground(Void... params){
-            try{
-                Log.d(TAG, "doInBackground: Start request");
-                return getDataFromApi(request);
-            }
-            catch(Exception e){
-                mLastError = e;
-                cancel(true);
-                return null;
-            }
-        }
-        private List<String> getDataFromApi(String functionName) throws IOException, GoogleAuthException{
-            String scriptId = "MvQzBIvgJGSM9HZKAHcraIMiusy43pzuj";
-            List<String> resultList;
-            ExecutionRequest request = new ExecutionRequest().setFunction(functionName);
-            Log.d(TAG, "Function set. Requesting for execution");
-            Operation op = mService.scripts().run(scriptId, request).execute();
-            Log.d(TAG, "Function Executed.");
-            if(op.getError() != null){
-                Log.d(TAG, "Script Error!");
-                throw new IOException(getScriptError(op));
-            }
-            if(op.getResponse() != null && op.getResponse().get("result") != null){
-                Log.d(TAG, "Script returned result!");
-                resultList = (List<String>) (op.getResponse().get("result"));
-                Log.d(TAG, resultList.toString());
-                return resultList;
-            }
-            return null;
-        }
-        private String getScriptError(Operation op){
-            if(op.getError() == null){
-                return null;
-            }
-            Map<String, Object> detail = op.getError().getDetails().get(0);
-            List<Map<String, Object>> stacktrace = (List<Map<String, Object>>)detail.get("scriptStackTraceElements");
-            java.lang.StringBuilder sb = new StringBuilder("\nScript error message: ");
-            sb.append(detail.get("errorMessage"));
-            if(stacktrace != null){
-                sb.append("\nScript error stacktrace:");
-                for(Map<String, Object> elem : stacktrace){
-                    sb.append("\n  ");
-                    sb.append(elem.get("function"));
-                    sb.append(":");
-                    sb.append(elem.get("lineNumber"));
-                }
-            }
-            sb.append("\n");
-            return sb.toString();
-        }
-        @Override
-        protected void onPreExecute(){
-        }
-        @Override
-        protected void onPostExecute(List<String> output){
-            Log.d(TAG, request);
-            if(output == null){
-                Log.d(TAG, "onPostExecute: returned result is null");
-            }
-            else{
-                Log.d(TAG,output.toString());
-                if(request.contains("getDirectory")){
-                    setDirectory(output);
-                }
-                else if(request.contains("getShifts")){
-                    setShifts(output);
-                }
-            }
-        }
-        @Override
-        protected void onCancelled(){
-            if(mLastError != null){
-                if(mLastError instanceof GooglePlayServicesAvailabilityIOException){
-                    showGooglePlayServicesAvailabilityErrorDialog(((GooglePlayServicesAvailabilityIOException) mLastError)
-                                    .getConnectionStatusCode());
-                }
-                else if(mLastError instanceof UserRecoverableAuthIOException){
-                    startActivityForResult(((UserRecoverableAuthIOException) mLastError).getIntent(), LoginActivity.REQUEST_AUTHORIZATION);
-                }
-                else{
-                    Log.d(TAG, "The following error occoured: " + mLastError.getMessage());
-                    try{
-                        mCredential.getGoogleAccountManager().invalidateAuthToken(mCredential.getToken());
-                        mCredential = GoogleAccountCredential.usingOAuth2(
-                                getApplicationContext(), Arrays.asList(SCOPES))
-                                .setBackOff(new ExponentialBackOff());
-                        Toast.makeText(LoginActivity.this,"Refreshing Token Try Again.", Toast.LENGTH_SHORT).show();
 
-                    }
-                    catch(IOException e){
-                        Log.w(TAG, e.getMessage());
-                    }
-                    catch(GoogleAuthException e){
-                        Log.w(TAG, e.getMessage());
-                    }
-                }
-            }
-            else{
-                Log.d(TAG, "onCancelled: request cancelled");
-            }
-        }
-    }
     private static HttpRequestInitializer setHttpTimeout(final HttpRequestInitializer requestInitializer){
         return new HttpRequestInitializer(){
             @Override
@@ -305,7 +188,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                 if(resultCode == RESULT_OK && data != null && data.getExtras() != null){
                     String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                     if(accountName != null){
-                        SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences settings = getSharedPreferences("Settings",0);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString(PREF_ACCOUNT_NAME, accountName);
                         editor.apply();
@@ -356,6 +239,8 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             startActivity(intent);
         }
     }
+    
+
     private void requestPermissions(){
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             int hasCallPermission = checkSelfPermission(Manifest.permission.CALL_PHONE);
@@ -412,5 +297,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             }
         }
     }
+
 }
 

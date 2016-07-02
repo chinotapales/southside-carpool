@@ -44,6 +44,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 + Shift.COL_TIME + " TEXT, "
                 + Shift.COL_PROVIDER + " TEXT);";
         db.execSQL(sql);
+        sql = "CREATE TABLE " + Announcement.TABLE_NAME + " ("
+                + Announcement.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + Announcement.COL_NAME + " TEXT, "
+                + Announcement.COL_DATE + " TEXT, "
+                + Announcement.COL_MESSAGE + " TEXT);";
+        db.execSQL(sql);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
@@ -83,6 +89,11 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + Shift.TABLE_NAME);
     }
+
+    public void deleteAllAnnouncements(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + Announcement.TABLE_NAME);
+    }
     public void deleteAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Person.TABLE_NAME, null, null);
@@ -108,6 +119,16 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         contentValues.put(Shift.COL_TIME, s.getShiftTime());
         contentValues.put(Shift.COL_PROVIDER, s.getShiftProvider());
         long id = db.insert(Shift.TABLE_NAME, null, contentValues);
+        db.close();
+        return id;
+    }
+    public long insertAnnouncement(Announcement a){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Announcement.COL_NAME, a.getAnnouncementName());
+        contentValues.put(Announcement.COL_DATE,a.getAnnouncementDate());
+        contentValues.put(Announcement.COL_MESSAGE,a.getAnnouncementMessage());
+        long id = db.insert(Announcement.TABLE_NAME, null, contentValues);
         db.close();
         return id;
     }
@@ -378,5 +399,23 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
             cursor.close();
         }
         return shifts;
+    }
+
+    public ArrayList<Announcement> getArrayListAnnouncements(){
+        ArrayList<Announcement> announcements = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(Announcement.TABLE_NAME,
+                null, null, null, null, null, Announcement.COL_ID + " DESC");
+        if(cursor != null) {
+            while(cursor.moveToNext()){
+                Announcement a = new Announcement();
+                a.setAnnouncementName(cursor.getString(cursor.getColumnIndex(Announcement.COL_NAME)));
+                a.setAnnouncementDate(cursor.getString(cursor.getColumnIndex(Announcement.COL_DATE)));
+                a.setAnnouncementMessage(cursor.getString(cursor.getColumnIndex(Announcement.COL_MESSAGE)));
+                announcements.add(a);
+            }
+            cursor.close();
+        }
+        return announcements;
     }
 }
