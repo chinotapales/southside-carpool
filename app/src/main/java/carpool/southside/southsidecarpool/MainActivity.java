@@ -2,23 +2,19 @@ package carpool.southside.southsidecarpool;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.util.ExponentialBackOff;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -48,7 +44,6 @@ public class MainActivity extends AppCompatActivity{
         bottomNavigation.setAccentColor(Color.parseColor("#4CAF50"));
         bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
         bottomNavigation.setCurrentItem(2);
-
         final ScheduleFragment schedule = new ScheduleFragment();
         final DirectoryFragment directory = new DirectoryFragment();
         final FavoritesFragment favorites = new FavoritesFragment();
@@ -115,9 +110,8 @@ public class MainActivity extends AppCompatActivity{
         });
 
     }
-
     public void updateData(Activity activity){
-        SharedPreferences settings = getSharedPreferences("Settings",0);
+        SharedPreferences settings = getSharedPreferences("Settings", 0);
         String accountName = settings.getString(PREF_ACCOUNT_NAME, null);
         GoogleAccountCredential mCredential = GoogleAccountCredential.usingOAuth2(getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
         mCredential.setSelectedAccountName(accountName);
@@ -126,16 +120,14 @@ public class MainActivity extends AppCompatActivity{
             Log.d(TAG, "getResultsFromApi: No network connection available");
         }
         else{
-            new MakeRequestTask(mCredential,"getDirectory",this).execute();
-            new MakeRequestTask(mCredential,"getAnnouncements",this).execute();
-            new MakeRequestTask(mCredential,"getShifts",this).execute();
+            new MakeRequestTask(mCredential, "getDirectory", this).execute();
+            new MakeRequestTask(mCredential, "getAnnouncements", this).execute();
+            new MakeRequestTask(mCredential, "getShifts", this).execute();
         }
-
     }
     private boolean isDeviceOnline(Activity activity){
         ConnectivityManager connMgr = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
-
 }

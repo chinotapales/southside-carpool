@@ -12,14 +12,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.SignInButton;
@@ -27,11 +25,9 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.util.ExponentialBackOff;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -116,7 +112,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             new MakeRequestTask(mCredential,"getDirectory",this).execute();
             new MakeRequestTask(mCredential,"getAnnouncements",this).execute();
             new MakeRequestTask(mCredential,"getShifts",this).execute();
-
         }
     }
     private boolean isDeviceOnline(){
@@ -213,10 +208,8 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                 name = directoryResult.get(i);
                 number = directoryResult.get(i + 1).toString();
                 university = directoryResult.get(i + 2);
-
                 Person person = new Person(name, number, university, 0, 0);
                 dbHelper.insertPerson(person);
-
                 Log.i(TAG, "Added new person " + name);
             }
         }
@@ -297,6 +290,5 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             }
         }
     }
-
 }
 

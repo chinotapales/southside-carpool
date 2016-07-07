@@ -126,8 +126,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Announcement.COL_NAME, a.getAnnouncementName());
-        contentValues.put(Announcement.COL_DATE,a.getAnnouncementDate());
-        contentValues.put(Announcement.COL_MESSAGE,a.getAnnouncementMessage());
+        contentValues.put(Announcement.COL_DATE, a.getAnnouncementDate());
+        contentValues.put(Announcement.COL_MESSAGE, a.getAnnouncementMessage());
         long id = db.insert(Announcement.TABLE_NAME, null, contentValues);
         db.close();
         return id;
@@ -400,7 +400,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
         }
         return shifts;
     }
-
     public ArrayList<Announcement> getArrayListAnnouncements(){
         ArrayList<Announcement> announcements = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();

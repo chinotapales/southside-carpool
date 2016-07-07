@@ -1,10 +1,10 @@
 package carpool.southside.southsidecarpool;
 
 public class Announcement{
-    public static final String TABLE_NAME = "Annoucnement";
+    public static final String TABLE_NAME = "Announcement";
     public static final String COL_ID = "announcementID";
-    public static final String COL_NAME = "annoucnementName";
-    public static final String COL_DATE = "annoucnementDate";
+    public static final String COL_NAME = "announcementName";
+    public static final String COL_DATE = "announcementDate";
     public static final String COL_MESSAGE = "announcementMessage";
     private int announcementID;
     private String announcementName;
@@ -46,26 +46,5 @@ public class Announcement{
     }
     public void setAnnouncementMessage(String announcementMessage){
         this.announcementMessage = announcementMessage;
-    }
-
-
-    public static String getTableName() {
-        return TABLE_NAME;
-    }
-
-    public static String getColId() {
-        return COL_ID;
-    }
-
-    public static String getColName() {
-        return COL_NAME;
-    }
-
-    public static String getColDate() {
-        return COL_DATE;
-    }
-
-    public static String getColMessage() {
-        return COL_MESSAGE;
     }
 }

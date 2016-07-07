@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
