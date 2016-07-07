@@ -68,13 +68,14 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         mCredential = GoogleAccountCredential.usingOAuth2(getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
         if(EasyPermissions.hasPermissions(this, Manifest.permission.GET_ACCOUNTS)){
             Log.d(TAG, PREF_ACCOUNT_NAME);
-            SharedPreferences settings = getSharedPreferences("Settings",0);
+            SharedPreferences settings = getSharedPreferences("Settings", 0);
             String accountName = settings.getString(PREF_ACCOUNT_NAME, null);
             if(accountName != null){
                 mCredential.setSelectedAccountName(accountName);
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("accountName",accountName);
+                intent.putExtra("accountName", accountName);
                 startActivity(intent);
+                finish();
             }
         }
     }
@@ -109,9 +110,9 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             Log.d(TAG, "getResultsFromApi: No network connection available");
         }
         else{
-            new MakeRequestTask(mCredential,"getDirectory",this).execute();
-            new MakeRequestTask(mCredential,"getAnnouncements",this).execute();
-            new MakeRequestTask(mCredential,"getShifts",this).execute();
+            new MakeRequestTask(mCredential,"getDirectory", this).execute();
+            new MakeRequestTask(mCredential,"getAnnouncements", this).execute();
+            new MakeRequestTask(mCredential,"getShifts", this).execute();
         }
     }
     private boolean isDeviceOnline(){
