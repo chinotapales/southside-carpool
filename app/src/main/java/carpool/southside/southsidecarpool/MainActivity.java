@@ -124,20 +124,21 @@ public class MainActivity extends AppCompatActivity{
                     swipeRefreshLayout.setRefreshing(false);
                 }
                 else {
-                    DatabaseOpenHelper db = new DatabaseOpenHelper(activity.getApplicationContext());
-                    ArrayList<String> riders = db.getArrayListFavoriteRiders();
+                    final DatabaseOpenHelper db = new DatabaseOpenHelper(activity.getApplicationContext());
+                    final ArrayList<String> riders = db.getArrayListFavoriteRiders();
                     Log.i(TAG, "fave riders size: "+riders.size());
-                    ArrayList<String> providers = db.getArrayListFavoriteProviders();
+                    final ArrayList<String> providers = db.getArrayListFavoriteProviders();
                     Log.i(TAG, "fave providers size: "+providers.size());
                     new MakeRequestTask(mCredential, "getDirectory", activity).execute();
                     new MakeRequestTask(mCredential, "getAnnouncements", activity).execute();
                     new MakeRequestTask(mCredential, "updateShifts", activity).execute();
-                    db.updateFavorites(riders, providers);
+
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             swipeRefreshLayout.setRefreshing(false);
+                            db.updateFavorites(riders, providers);
                         }
                     }, 5000);
                 }
