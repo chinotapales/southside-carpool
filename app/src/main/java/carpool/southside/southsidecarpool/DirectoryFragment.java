@@ -44,7 +44,7 @@ public class DirectoryFragment extends Fragment implements RadioGroup.OnCheckedC
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
-                ((MainActivity)getActivity()).updateData(getActivity());
+                ((MainActivity)getActivity()).updateData(getActivity(),dSwipeRefreshLayout);
             }
         });
         rvPeople.setLayoutManager(new LinearLayoutManager(v.getContext()));

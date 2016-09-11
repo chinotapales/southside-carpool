@@ -5,7 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -171,6 +175,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
                 Person.COL_ID + " =? ",
                 new String[]{String.valueOf(id)});
     }
+
     public int updateFavoriteProviderByName(String name, int favorited){
         ContentValues contentValues = new ContentValues();
         contentValues.put(Person.COL_PROVIDER_FAVORITED, favorited);
@@ -416,5 +421,35 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
             cursor.close();
         }
         return announcements;
+    }
+    public ArrayList<String> getArrayListFavoriteRiders(){
+        ArrayList<String> riders = new ArrayList<>();
+        Cursor cursor = getAllPeopleByFavRiders();
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                    riders.add(cursor.getString(cursor.getColumnIndex(Person.COL_NAME)));
+            }
+        }
+        return riders;
+    }
+    public ArrayList<String> getArrayListFavoriteProviders(){
+        ArrayList<String> providers = new ArrayList<>();
+        Cursor cursor = getAllPeopleByFavProviders();
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                providers.add(cursor.getString(cursor.getColumnIndex(Person.COL_NAME)));
+            }
+        }
+        return providers;
+    }
+    public void updateFavorites(ArrayList<String> riders, ArrayList<String> providers){
+        for(int i=0; i<riders.size(); i++){
+            updateFavoriteRiderByName(riders.get(i),1);
+            Log.i("DB", "setting favorited rider: "+riders.get(i));
+        }
+        for(int i=0; i<providers.size(); i++){
+            updateFavoriteProviderByName(providers.get(i),1);
+            Log.i("DB", "setting favorited provider: "+providers.get(i));
+        }
     }
 }

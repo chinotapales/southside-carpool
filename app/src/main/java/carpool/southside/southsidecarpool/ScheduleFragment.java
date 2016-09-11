@@ -38,7 +38,7 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
-                ((MainActivity)getActivity()).updateData(getActivity());
+                ((MainActivity)getActivity()).updateData(getActivity(),dSwipeRefreshLayout);
             }
         });
         rSchedule.setLayoutManager(new LinearLayoutManager(v.getContext()));
@@ -51,7 +51,7 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
-                ((MainActivity)getActivity()).updateData(getActivity());
+                ((MainActivity)getActivity()).updateData(getActivity(),dSwipeRefreshLayout);
             }
         });
         rSchedule.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -93,7 +93,7 @@ public class ScheduleFragment extends Fragment implements RadioGroup.OnCheckedCh
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
-                ((MainActivity)getActivity()).updateData(getActivity());
+                ((MainActivity)getActivity()).updateData(getActivity(),dSwipeRefreshLayout);
             }
         });
         rSchedule.setLayoutManager(new LinearLayoutManager(getContext()));

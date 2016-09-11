@@ -47,7 +47,8 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         dSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
-                ((MainActivity)getActivity()).updateData(getActivity());
+                ((MainActivity)getActivity()).updateData(getActivity(),dSwipeRefreshLayout);
+
             }
         });
         rvFavorites.setLayoutManager(new LinearLayoutManager(v.getContext()));
@@ -151,4 +152,6 @@ public class FavoritesFragment extends Fragment implements RadioGroup.OnCheckedC
         }
         initSwipe();
     }
+
+
 }

@@ -32,7 +32,7 @@ public class AnnouncementFragment extends Fragment{
         aSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
-                ((MainActivity)getActivity()).updateData(getActivity());
+                ((MainActivity)getActivity()).updateData(getActivity(),aSwipeRefreshLayout);
             }
         });
         rvAnnouncements.setLayoutManager(new LinearLayoutManager(v.getContext()));

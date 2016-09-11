@@ -35,7 +35,7 @@ public class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
     private Exception mLastError = null;
     private String request = null;
     private static final String TAG = "MakeRequestTask";
-    private GoogleAccountCredential mCredential;
+    public GoogleAccountCredential mCredential;
     private Activity mActivity;
     private DatabaseOpenHelper dbHelper;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
@@ -54,6 +54,9 @@ public class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
     protected List<String> doInBackground(Void... params){
         try{
             Log.d(TAG, "doInBackground: Start request");
+            if(request.contains("updateShifts")){
+                return getDataFromApi("getShifts");
+            }
             return getDataFromApi(request);
         }
         catch(Exception e){
@@ -118,6 +121,9 @@ public class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
             else if(request.contains("getShifts")){
                 setShifts(output);
             }
+            else if(request.contains("updateShifts")){
+                updateShifts(output);
+            }
             else if(request.contains("getAnnouncements")){
                 setAnnouncements(output);
             }
@@ -134,17 +140,24 @@ public class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
             }
             else{
                 Log.d(TAG, "The following error occoured: " + mLastError.getMessage());
-                try{
-                    mCredential.getGoogleAccountManager().invalidateAuthToken(mCredential.getToken());
-                    mCredential = GoogleAccountCredential.usingOAuth2(mActivity.getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
-                    Toast.makeText(mActivity, "Refreshing Token Try Again.", Toast.LENGTH_SHORT).show();
-                }
-                catch(IOException e){
-                    Log.w(TAG, e.getMessage());
-                }
-                catch (GoogleAuthException e){
-                    Log.w(TAG, e.getMessage());
-                }
+
+                   new Thread(new Runnable() {
+                       @Override
+                       public void run() {
+                           try{
+                           mCredential.getGoogleAccountManager().invalidateAuthToken(mCredential.getToken());
+                           mCredential = GoogleAccountCredential.usingOAuth2(mActivity.getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
+                           Toast.makeText(mActivity, "Refreshing Token Try Again.", Toast.LENGTH_SHORT).show();
+                           }
+                           catch(IOException e){
+                               Log.w(TAG, e.getMessage());
+                           }
+                           catch (GoogleAuthException e){
+                               Log.w(TAG, e.getMessage());
+                           }
+                       }
+                   }).start();
+
             }
         }
         else{
@@ -193,8 +206,9 @@ public class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
                 university = directoryResult.get(i + 2);
                 Person person = new Person(name, number, university, 0, 0);
                 dbHelper.insertPerson(person);
-                Log.i(TAG, "Added new person " + name);
             }
+
+            Log.i(TAG, "Got data for directory");
         }
     }
     private void setShifts(List<String> shiftsResult){
@@ -209,8 +223,8 @@ public class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
                 provider = shiftsResult.get(i + 3);
                 Shift shift = new Shift(day, type, time, provider);
                 dbHelper.insertShift(shift);
-                Log.i(TAG, "Added new shift by " + provider);
             }
+            Log.i(TAG, "Setting Shifts");
             Intent intent = new Intent(mActivity, MainActivity.class);
             mActivity.startActivity(intent);
         }
@@ -227,8 +241,8 @@ public class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
                 provider = shiftsResult.get(i + 3);
                 Shift shift = new Shift(day, type, time, provider);
                 dbHelper.insertShift(shift);
-                Log.i(TAG, "Added new shift by " + provider);
-            }   
+            }
+            Log.i(TAG, "Updating Shifts");
         }
     }
     private void setAnnouncements(List<String> announcementResult){

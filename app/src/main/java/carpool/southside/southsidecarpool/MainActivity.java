@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -111,20 +113,34 @@ public class MainActivity extends AppCompatActivity{
         });
 
     }
-    public void updateData(Activity activity){
-        SharedPreferences settings = getSharedPreferences("Settings", 0);
-        String accountName = settings.getString(PREF_ACCOUNT_NAME, null);
-        GoogleAccountCredential mCredential = GoogleAccountCredential.usingOAuth2(getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
-        mCredential.setSelectedAccountName(accountName);
-        if(!isDeviceOnline(activity)){
-            Toast.makeText(activity, "No network connection available", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "getResultsFromApi: No network connection available");
-        }
-        else{
-            new MakeRequestTask(mCredential, "getDirectory", this).execute();
-            new MakeRequestTask(mCredential, "getAnnouncements", this).execute();
-            new MakeRequestTask(mCredential, "getShifts", this).execute();
-        }
+    public void updateData(Activity activity, final SwipeRefreshLayout swipeRefreshLayout){
+                SharedPreferences settings = activity.getSharedPreferences("Settings", 0);
+                String accountName = settings.getString(PREF_ACCOUNT_NAME, null);
+                GoogleAccountCredential mCredential = GoogleAccountCredential.usingOAuth2(activity.getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
+                mCredential.setSelectedAccountName(accountName);
+                if(!isDeviceOnline(activity)){
+                    Toast.makeText(activity, "No network connection available", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "getResultsFromApi: No network connection available");
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                else {
+                    DatabaseOpenHelper db = new DatabaseOpenHelper(activity.getApplicationContext());
+                    ArrayList<String> riders = db.getArrayListFavoriteRiders();
+                    Log.i(TAG, "fave riders size: "+riders.size());
+                    ArrayList<String> providers = db.getArrayListFavoriteProviders();
+                    Log.i(TAG, "fave providers size: "+providers.size());
+                    new MakeRequestTask(mCredential, "getDirectory", activity).execute();
+                    new MakeRequestTask(mCredential, "getAnnouncements", activity).execute();
+                    new MakeRequestTask(mCredential, "updateShifts", activity).execute();
+                    db.updateFavorites(riders, providers);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }, 5000);
+                }
     }
     private boolean isDeviceOnline(Activity activity){
         ConnectivityManager connMgr = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
