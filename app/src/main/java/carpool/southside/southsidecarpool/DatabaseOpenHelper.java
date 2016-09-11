@@ -312,16 +312,16 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
     }
     public Cursor getAllPeople(){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(Person.TABLE_NAME, null, null, null, null, null, Person.COL_NAME + " ASC");
+        Cursor cursor = db.query(true, Person.TABLE_NAME, null, null, null, null, null, Person.COL_NAME + " ASC", null);
         return cursor;
     }
     public Cursor getAllPeopleByCollege(String college){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(Person.TABLE_NAME,
+        Cursor cursor = db.query(true, Person.TABLE_NAME,
                 null,
                 Person.COL_COLLEGE + " =? ",
                 new String[]{college},
-                null, null, Person.COL_NAME + " ASC");
+                null, null, Person.COL_NAME + " ASC", null);
         return cursor;
     }
     public Cursor getAllPeopleByFavProviders(){

@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity{
                 GoogleAccountCredential mCredential = GoogleAccountCredential.usingOAuth2(activity.getApplicationContext(), Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
                 mCredential.setSelectedAccountName(accountName);
                 if(!isDeviceOnline(activity)){
-                    Toast.makeText(activity, "No network connection available", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "getResultsFromApi: No network connection available");
+                    Toast.makeText(activity, "No Network Connection", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "getResultsFromApi: No Network Connection");
                     swipeRefreshLayout.setRefreshing(false);
                 }
                 else {

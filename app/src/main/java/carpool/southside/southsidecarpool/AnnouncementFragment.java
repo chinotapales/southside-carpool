@@ -54,7 +54,8 @@ public class AnnouncementFragment extends Fragment{
         super.onResume();
         List<Announcement> announcements;
         db = new DatabaseOpenHelper(getContext());
-        announcements = db.getArrayListAnnouncements();announcementAdapter = new AnnouncementAdapter(getContext(), announcements);
+        announcements = db.getArrayListAnnouncements();
+        announcementAdapter = new AnnouncementAdapter(getContext(), announcements);
         rvAnnouncements.setAdapter(announcementAdapter);
         checkEmpty();
     }

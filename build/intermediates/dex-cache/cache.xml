@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="bfd033bb047c2a81385f100b7c254dc1e653f7f0">
+        <dex dex="/Users/chinotapales/AndroidStudioProjects/SouthsideCarpool/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_7046f75e17d8e649011098367608e8b3171b9b18/classes.dex" />
+    </item>
+
+</items>

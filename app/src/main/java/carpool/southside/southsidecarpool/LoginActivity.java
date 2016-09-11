@@ -106,8 +106,8 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             chooseAccount();
         }
         else if(!isDeviceOnline()){
-            Toast.makeText(LoginActivity.this, "No network connection available", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "getResultsFromApi: No network connection available");
+            Toast.makeText(LoginActivity.this, "No Network Connection", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getResultsFromApi: No Network Connection");
         }
         else{
             new MakeRequestTask(mCredential,"getDirectory", this).execute();
@@ -137,7 +137,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         Dialog dialog = apiAvailability.getErrorDialog(LoginActivity.this, connectionStatusCode, REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
     }
-
     private static HttpRequestInitializer setHttpTimeout(final HttpRequestInitializer requestInitializer){
         return new HttpRequestInitializer(){
             @Override
@@ -233,8 +232,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             startActivity(intent);
         }
     }
-    
-
     private void requestPermissions(){
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             int hasCallPermission = checkSelfPermission(Manifest.permission.CALL_PHONE);
